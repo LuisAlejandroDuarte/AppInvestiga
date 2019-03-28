@@ -1042,7 +1042,7 @@ $resultArray = array();
 
      $result = mysqli_query($conexion,$query); 
 
-      
+    
 
     if (mysqli_num_rows($result)==0 )
 
@@ -1059,7 +1059,7 @@ $resultArray = array();
            $this->mostrarRespuesta($this->convertirJson($resultArray), 200);  
 
             
-
+           mysqli_close();
     }
 
     else
@@ -1077,7 +1077,7 @@ $resultArray = array();
 
 
        
-
+      mysqli_close();
           
 
 
