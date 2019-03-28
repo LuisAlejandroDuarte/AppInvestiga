@@ -1,0 +1,133 @@
+body
+{
+   background-color: #FFFFFF;
+   background-image: url(../img/info.jpg);
+   background-position: left top;
+   background-repeat: no-repeat;
+   color: #000000;
+   font-family: Arial;
+   font-size: 13px;
+   margin: 0;
+   padding: 0;
+}
+#wb_Form1
+{
+   background-color: transparent;
+   border: 0px #000000 none;
+}
+#Editbox1
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Editbox2
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Editbox3
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Editbox4
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Editbox5
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Combobox1
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color: #A9A9A9;
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 13px;
+}
+#wb_Text1 
+{
+   background-color: transparent;
+   border: 0px #000000 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_Text1 div
+{
+   text-align: left;
+}
+#Editbox6
+{
+   border: 1px #DCDCDC solid;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+   color :#000000;
+   font-family: Arial;
+   font-size: 13px;
+   padding: 0px 0px 0px 10px;
+   text-align: left;
+   vertical-align: middle;
+}
+#Button1
+{
+   border: 1px #A9A9A9 dotted;
+   background-color: transparent;
+   color: #000000;
+   font-family: Arial;
+   font-size: 13px;
+}

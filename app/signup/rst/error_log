@@ -1,0 +1,5 @@
+[01-Aug-2017 16:18:38 UTC] PHP Notice:  Undefined variable: message in /home/guane/public_html/AppInvestigacion/app/signup/rst/login.php on line 5
+[01-Aug-2017 16:18:54 UTC] PHP Notice:  Undefined variable: message in /home/guane/public_html/AppInvestigacion/app/signup/rst/info.php on line 5
+[01-Aug-2017 16:19:12 UTC] PHP Notice:  Undefined variable: message in /home/guane/public_html/AppInvestigacion/app/signup/rst/card.php on line 5
+[02-Aug-2017 08:19:53 UTC] PHP Notice:  Undefined variable: message in /home/guane/public_html/AppInvestigacion/app/signup/rst/login.php on line 5
+[02-Aug-2017 20:48:32 UTC] PHP Notice:  Undefined variable: message in /home/guane/public_html/AppInvestigacion/app/signup/rst/login.php on line 5
