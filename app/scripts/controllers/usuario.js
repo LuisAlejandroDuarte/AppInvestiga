@@ -178,17 +178,13 @@
 
         var datos ={
 
-            Accion:"S",
-
-            SQL:'SELECT USE_CODI,USE_IDEN,USE_TELE,USE_COD_TIPO, USE_NOMB,USE_APEL,USE_EMAI,USE_USUA, CASE WHEN USE_COD_TIPO="0" THEN "Administrador" ' +
-
-                         ' ELSE "Investigador" END AS TIPO from sgi_user WHERE USE_CODI'
+            Accion:"SELECT"            
 
         }
 
 
 
-        var usuarios = TareasResource.SQL(datos); 
+        var usuarios = TareasResource.prUsuario(datos); 
 
             usuarios.then(function(result){
 

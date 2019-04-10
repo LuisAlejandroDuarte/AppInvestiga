@@ -56,8 +56,16 @@ angular.module('listaTareasApp')
 	  		  return $http.post('scripts/services/executesql.php', datos);  
 			},
 			
-			prIniciar : function(datos) {
+		prIniciar : function(datos) {
 				return $http.post('scripts/services/prIniciar.php', datos);  
+		},
+
+		prUsuario : function(datos) {
+			return $http.post('scripts/services/prUsuario.php', datos);  
+	},
+
+		prTipoDocumento: function(datos) {
+			return $http.post('scripts/services/prTipoDocumento.php', datos);  
 		},
 
 		prInvestigador: function(datos) {
@@ -67,7 +75,57 @@ angular.module('listaTareasApp')
 		prProductos: function(datos) {
 			return $http.post('scripts/services/prProductos.php', datos);  
 		},
+	
 
+		prTipoCargo: function(datos) {
+			return $http.post('scripts/services/prTipoCargo.php', datos);  
+		},
+
+
+
+		prCentro: function(datos) {
+			return $http.post('scripts/services/prCentro.php', datos);  
+		},
+
+		prProgramaAcademico: function(datos) {
+			return $http.post('scripts/services/prProgramaAcademico.php', datos);  
+		},
+
+		prNivelFormacion: function(datos) {
+			return $http.post('scripts/services/prNivelFormacion.php', datos);  
+		},
+
+		prGrupo: function(datos) {
+			return $http.post('scripts/services/prGrupo.php', datos);  
+		},
+
+		prTipoVinculacion: function(datos) {
+			return $http.post('scripts/services/prTipoVinculacion.php', datos);  
+		},
+
+		prConvocatoria: function(datos) {
+			return $http.post('scripts/services/prConvocatoria.php', datos);  
+		},
+
+		prTipoProducto: function(datos) {
+			return $http.post('scripts/services/prTipoProducto.php', datos);  
+		},
+
+		prSemillero: function(datos) {
+			return $http.post('scripts/services/prSemillero.php', datos);  
+		},
+
+		prProyectoProducto: function(datos) {
+			return $http.post('scripts/services/prProyectoProducto.php', datos);  
+		},
+
+		prLineaInvestigacion: function(datos) {
+			return $http.post('scripts/services/prLineaInvestigacion.php', datos);  
+		},
+
+		prProyecto: function(datos) {
+			return $http.post('scripts/services/prProyecto.php', datos);  
+		},
 
 	  	PDF : function(datos) {
 	  				return  $http({	  				

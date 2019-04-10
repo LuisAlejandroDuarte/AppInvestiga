@@ -3,19 +3,20 @@
   require_once("config.php");  
   $d= json_decode(file_get_contents("php://input"),TRUE); 
 
-  $Accion = $d['Accion'];
-
+  $Accion = $d['Accion'];  
 
   $conexion= mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
   if (mysqli_connect_errno()) {
      echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
-  if ($Accion=="SELECT")
+  if ($Accion=="SelectProyectoProducto")
    {
-    $SQL="SELECT PI.id_grupo,PI.id_tipoInvestigador,PI.id_convocatoria,PI.id_linea, " .
-    " P.PRO_CODI, P.PRO_NOMB, P.PRO_FINA,PI.fecha_ini,PI.fecha_ter FROM sgi_proy_inve AS PI INNER JOIN sgi_inve AS I ON I.INV_CODI =PI.id_inve INNER JOIN sgi_proy AS P ON  " . 
-    " P.PRO_CODI=PI.id_proy WHERE  PI.id_inve=" . $d['IdInvestigador'];
+    $SQL="select tp.Descripcion AS NombreTipoProducto, pr.id AS IdProducto,pr.id_tipo AS IdTipoProducto,pr.Nombre As NombreProducto, " . 
+    " pp.titulo AS TituloProducto ,pp.fecha AS Fecha ,'false' As Sel " .
+    " FROM  sgi_prod AS pr INNER JOIN sgi_tipo_prod AS tp ON (tp.id = pr.id_tipo) " .
+    " INNER JOIN sgi_prod_proy AS pp ON (pp.id_prod=pr.id) " .
+    " WHERE pp.id_proy =" . $d['IdProyecto'] . " AND pp.id_inve="  . $d['IdInve'] ;
 
     $resultArray = array(); 
   	$resultado = mysqli_query($conexion,$SQL);
@@ -27,7 +28,7 @@
            $resultArray[] = $tuple;         
         }               
     }
-  
+    
     echo json_encode($resultArray);                                                        
     mysqli_close($conexion);
    }

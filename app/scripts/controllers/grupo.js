@@ -3,25 +3,15 @@
  angular.module('listaTareasApp')
 
 .directive('myModalgrupo', function() {
-
        return {
-
         restrict : 'AE',    
-
         controller: [ "$scope","$window",'$http','TareasResource', function($scope,$window,$http,TareasResource) {
-
             $scope.afirmaEliminar = function() {
-
                     var Codigo = $('#myModal').data('id').toString(); 
-
                     var user = JSON.parse($window.sessionStorage.getItem('investigador'));
-
                     var Execute = {
-
                         Accion:'S',
-
                         SQL:'SELECT Count(IGR_GRUP_CODI) As Count FROM sgi_inve_grup WHERE IGR_GRUP_CODI=' + Codigo + ' AND IGR_FECH_TERM is null AND IGR_INVE_IDEN<>' + user.INV_CODI
-
 
 
                     }

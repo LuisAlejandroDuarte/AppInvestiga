@@ -51,15 +51,13 @@ angular.module('listaTareasApp')
 	 	if (id==0 || id==-1)
 	 	{
 
-	 		var executesql = TareasResource.SQL(datos);
+			datos ={
+				Accion:'ValidarIdentificacion',
+				IdUser: usuario.USE_IDEN
+			}
+	 		var executesql = TareasResource.prUsuario(datos);
 	 			executesql.then(function(result){
-	 					datos ={
-	 						Accion:'S',
-	 						SQL:"SELECT COUNT(*) As Cuantos FROM sgi_user WHERE USE_IDEN='" + usuario.USE_IDEN + "'"
-	 					}
-
-					executesql = TareasResource.SQL(datos);	
-						executesql.then(function(result){
+	 					
 
 						if (result.data[0].Cuantos>0)
 						{
@@ -69,11 +67,11 @@ angular.module('listaTareasApp')
 						else
 						{
 							datos ={
-	 							Accion:'S',
-	 							SQL:"SELECT COUNT(*) As Cuantos FROM sgi_user WHERE USE_USUA='" + usuario.USE_USUA + "'"
+	 							Accion:'ValidarUsuario',
+	 							IdUsua: usuario.USE_USUA
 	 						}
 
-							executesql = TareasResource.SQL(datos);	
+							executesql = TareasResource.prUsuario(datos);	
 								executesql.then(function(result){
 
 									if (result.data[0].Cuantos>0)
@@ -84,36 +82,34 @@ angular.module('listaTareasApp')
 									else
 									{
 										datos = {
-	 										Accion:"I",
-	 										SQL:"INSERT INTO sgi_user (USE_IDEN,USE_NOMB,USE_APEL,USE_EMAI,USE_TELE,USE_USUA,USE_CLAV,USE_COD_TIPO) " +
-	 										" VALUES ('" +  usuario.USE_IDEN + "','" +  usuario.USE_NOMB +"','" +  usuario.USE_APEL +"'," + 
-	 										"'" +  usuario.USE_EMAI +"','" +  usuario.USE_TELE +"','" +  usuario.USE_USUA + "','" +  md5(usuario.USE_USUA) + "'," + usuario.USE_COD_TIPO + ")"
+											 Accion:"INSERT",
+											 USE_IDEN:usuario.USE_IDEN,
+											 USE_NOMB:usuario.USE_NOMB,
+											 USE_APEL:usuario.USE_APEL,
+											 USE_EMAI:usuario.USE_EMAI,
+											 USE_TELE:usuario.USE_TELE,
+											 USE_USUA:usuario.USE_USUA,
+											 USE_PASS:md5(usuario.USE_USUA),
+											 USE_COD_TIPO:usuario.USE_COD_TIPO	 										
 	 										}
 
-	 									executesql = TareasResource.SQL(datos);
-	 										executesql.then(function(result){
-	 										datos ={
-	 											Accion:'S',
-	 											SQL:"SELECT MAX(USE_CODI) As Maximo FROM sgi_user"
-	 											}
-
-											executesql = TareasResource.SQL(datos);	 					
-	 										executesql.then(function(result){
+	 									executesql = TareasResource.prUsuario(datos);
+	 										executesql.then(function(result){	 										
 												var maximo =result.data[0].Maximo;
 	 										if (usuario.USE_COD_TIPO==1)
-	 											{	
-													
-
+	 											{														
 	 						   						datos ={
-					        						Accion: 'I',
-								        			SQL: "0;sgi_inve;INV_CODI;INSERT INTO  sgi_inve (INV_CODI,INV_IDEN,INV_TIPO_DOCU_CODI, " +
-								        			" INV_NOMB,INV_APEL,INV_FECH_NACI,INV_MAIL,INV_CODI_USUA,INV_PASS,INV_TELE_CELU) " + 
-								        			" VALUES (@@,'" +  usuario.USE_IDEN + "',1,'" + 
-								        			usuario.USE_NOMB + "','" + usuario.USE_APEL + "','" + moment(new Date()).format('YYYY-MM-DD')  + "','" + 
-								        			usuario.USE_EMAI + "'," + result.data[0].Maximo + ",'" + md5(usuario.USE_USUA) + "','" + usuario.USE_TELE + "')"
+													Accion: 'INSERT',
+													USE_IDEN:usuario.USE_IDEN,
+													USE_NOMB: usuario.USE_NOMB,
+													USE_APEL:usuario.USE_APEL,
+													FECHA: moment(new Date()).format('YYYY-MM-DD'),
+													IdUser:maximo,
+													PASS: md5(usuario.USE_USUA),
+													USE_TELE:usuario.USE_TELE 
 			      									};       
 
-									      	TareasResource.enviararchivo(datos).then(function(result) { 
+									      	TareasResource.prInvestigador(datos).then(function(result) { 
 									      	$window.alert('Ingresado');
 									      		if (id==-1)  
 									      		{
@@ -132,15 +128,14 @@ angular.module('listaTareasApp')
 						 							$window.alert('Ingresado');
 						 							$location.path('/edit-usuario/' + maximo);
 						 					}
-					 					});
- 				
+					 				
 	 								});
 								}
 
 							});
 						}
 
-					});
+					
 
 	 		});
 		}

@@ -49,7 +49,39 @@
            $resultArray[] = $tuple;         
         }               
     }
-    mysqli_close($conexion);
+    
+    if ($Accion=="INSERT")
+    {
+
+      
+      $SQL="SELECT MAX(INV_CODI) As Maximo FROM sgi_inve";
+      $resultado = mysqli_query($conexion,$SQL);
+      if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+      else
+      {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+      }
+      
+      $INV_CODI =$resultArray[0]['Maximo'] + 1;
+
+
+
+      $SQL="INSERT INTO  sgi_inve (INV_CODI,INV_IDEN,INV_TIPO_DOCU_CODI, " .
+      " INV_NOMB,INV_APEL,INV_FECH_NACI,INV_MAIL,INV_CODI_USUA,INV_PASS,INV_TELE_CELU) " .
+      " VALUES (" . $INV_CODI . "," . $d['USE_IDEN'] . "',1,'" . 
+      $d['USE_NOMB'] . "','" . $d['USE_APEL'] . "','" . $d['FECHA'] . "','" .
+      $d['USE_EMAI'] . "','" . $d['IdUser'] . "','" . $d['PASS'] . "','" . $d['USE_TELE'] . "'";
+
+      $resultArray[0]['Maximo'] = $INV_CODI;              
+      $resultado = mysqli_query($conexion,$SQL);
+
+    }
+
+
     echo json_encode($resultArray);                                                        
+    mysqli_close($conexion);
    }
 ?>
