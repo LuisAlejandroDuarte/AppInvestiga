@@ -60,6 +60,14 @@ angular.module('listaTareasApp')
 				return $http.post('scripts/services/prIniciar.php', datos);  
 		},
 
+		prInvestigador: function(datos) {
+			return $http.post('scripts/services/prInvestigador.php', datos);  
+		},
+		
+		prProductos: function(datos) {
+			return $http.post('scripts/services/prProductos.php', datos);  
+		},
+
 
 	  	PDF : function(datos) {
 	  				return  $http({	  				

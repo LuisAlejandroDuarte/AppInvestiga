@@ -1,9 +1,6 @@
 var eliminarProducto2;
 'use strict';
-
 angular.module('listaTareasApp')
-  
-
 .directive('myModalproyectos', function() {
        return {
         restrict : 'AE',    
@@ -119,7 +116,7 @@ angular.module('listaTareasApp')
 
 
   
-  .controller('editInvestigador', function($scope,$timeout,$window,$location,datosInvestigador,TareasResource,$route,$base64,$q) {
+  .controller('editInvestigador', function($scope,$timeout,$window,$location,TareasResource,$route,$base64,$q) {
     var id_inve;
     var idInvestigador;    
     var oldUser;
@@ -149,25 +146,16 @@ angular.module('listaTareasApp')
   };
 
    $scope.mostrarboton2 = function() {
-  
-     $scope.mostrarboton=true;
-   
+       $scope.mostrarboton=true;
   };
-
-   $scope.mostrarboton3 = function() {
-  
+   $scope.mostrarboton3 = function() { 
      $scope.mostrarboton=false;
       $scope.volverLista();
-
-   
   };
 
   $scope.nomostrarboton = function() {
-   
      $scope.mostrarboton=false;
-  
   };
-
    $scope.proy ={
           selTipoInvestigador:'',
           selEntidad:'',
@@ -175,9 +163,8 @@ angular.module('listaTareasApp')
           selGrupoProducto:''          
         };
 
-   moment.locale('es');
-  $scope.options = {                       
-          
+  moment.locale('es');
+  $scope.options = {                                
                 cache: false,
                 height: 300,
                 striped: true,
@@ -319,11 +306,21 @@ angular.module('listaTareasApp')
             }]
         };    
          $('#myModal').show();  
-        datosInvestigador.$promise.then(function(datos){      
-                id_inve = datos[0].INV_CODI;
+         
+
+            var datos = {
+              Accion: "SELECTID",
+              Investigador:id_inve
+            }
+
+        var dat = TareasResource.prInvestigador(datos);      
+
+        dat.then(function(datos){      
+                id_inve = datos.data[0].INV_CODI;
+                var datosInvestigador = datos.data;
                $scope.hideTable=false;  
                $scope.hideProyecto =true;   
-                  $scope.viewDatos = datosInvestigador; 
+                  $scope.viewDatos = datos.data; 
                     var day;
                      var mounth;
                      var year;
@@ -337,15 +334,13 @@ angular.module('listaTareasApp')
 
                      $scope.viewDatos[0].INV_FECH_NACI =moment(datosInvestigador[0].INV_FECH_NACI).format("DD-MMMM-YYYY");
             
-              oldIdentificacion = datos[0].INV_IDEN;   
-               var productos ={
-                  Accion :'S',
-                  SQL:'SELECT PI.id_grupo,PI.id_tipoInvestigador,PI.id_convocatoria,PI.id_linea,' +
-                      'P.PRO_CODI, P.PRO_NOMB, P.PRO_FINA,PI.fecha_ini,PI.fecha_ter FROM sgi_proy_inve AS PI INNER JOIN sgi_inve AS I ON I.INV_CODI =PI.id_inve INNER JOIN sgi_proy AS P ON  ' + 
-                      'P.PRO_CODI=PI.id_proy WHERE  PI.id_inve=' + datos[0].INV_CODI 
-               }
+              oldIdentificacion = datos.data[0].INV_IDEN;   
+              var productos ={
+                Accion :'SELECT',
+                IdInvestigador:datos.data[0].INV_CODI 
+             }
 
-             var consulta = TareasResource.SQL(productos);
+             var consulta = TareasResource.prProductos(productos);
 
                   consulta.then(function(dat){
 

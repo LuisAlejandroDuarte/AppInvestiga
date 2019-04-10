@@ -499,24 +499,7 @@ angular.module("listaTareasApp", ['ngRoute','ngAnimate','ngLocale', 'ngResource'
 
         templateUrl: 'views/edit-investigador.html',
 
-        controller: 'editInvestigador',
-
-         resolve: {
-
-          datosInvestigador: function($route,TareasResource){
-
-            var investigadorID = parseInt($route.current.params.idInvestigador);
-
-           
-
-            var dat = TareasResource.execute.query({Accion: 'SELECT',pr:'prInvestigador',
-                         PAR: investigadorID  });                           
-
-            return dat;         
-
-          }
-
-        }
+        controller: 'editInvestigador',      
 
       })
 

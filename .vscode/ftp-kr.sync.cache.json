@@ -13,8 +13,8 @@
           "scripts": {
             "app.js": {
               "type": "-",
-              "size": 17746,
-              "lmtime": 1554862755324,
+              "size": 17330,
+              "lmtime": 1554870377456,
               "modified": false
             },
             "controllers": {
@@ -104,8 +104,8 @@
               },
               "edit-investigador.js": {
                 "type": "-",
-                "size": 76728,
-                "lmtime": 0,
+                "size": 76575,
+                "lmtime": 1554871095591,
                 "modified": false
               },
               "edit-parametroEvaluacion.js": {
@@ -194,8 +194,8 @@
               },
               "inicio.js": {
                 "type": "-",
-                "size": 11323,
-                "lmtime": 1554866148385,
+                "size": 10639,
+                "lmtime": 1554868920330,
                 "modified": false
               },
               "investigador.js": {
@@ -349,8 +349,8 @@
               },
               "crud.js": {
                 "type": "-",
-                "size": 5358,
-                "lmtime": 1554865844682,
+                "size": 5586,
+                "lmtime": 1554871140629,
                 "modified": false
               },
               "descargarbinario.php": {
@@ -430,6 +430,18 @@
                 "type": "-",
                 "size": 0,
                 "lmtime": 1554865434377,
+                "modified": false
+              },
+              "prInvestigador.php": {
+                "type": "-",
+                "size": 2330,
+                "lmtime": 1554869805063,
+                "modified": false
+              },
+              "prProductos.php": {
+                "type": "-",
+                "size": 1268,
+                "lmtime": 1554871239509,
                 "modified": false
               },
               "proyecto.php": {

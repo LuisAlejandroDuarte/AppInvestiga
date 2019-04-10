@@ -1,9 +1,5 @@
 'use strict';
-
-
-
 angular.module('listaTareasApp')
-
 .controller('MenuInvestigador',['$scope','TareasResource', '$window','$location', function ($scope,TareasResource,$window,$location) {
 	$scope.onClicInvestigador = function()
 	{
@@ -11,7 +7,6 @@ angular.module('listaTareasApp')
 		$location.path('/inicio');
 	}
 }])
-
 .controller('MenuGrupo',['$scope','TareasResource', '$window','$location', function ($scope,TareasResource,$window,$location) {
 	$scope.onClicGrupo = function()
 	{
@@ -19,7 +14,6 @@ angular.module('listaTareasApp')
 		$location.path('/inicio');
 	}
 }])
-
 .controller('MenuConvocatorias',['$scope','TareasResource', '$window','$location', function ($scope,TareasResource,$window,$location) {
 	$scope.onClicConvocatoria = function()
 	{	
@@ -27,391 +21,163 @@ angular.module('listaTareasApp')
 	}
 }])
 
-
   .directive('myUsuario', [function () {
 
     return {
-
       restrict: 'AE',     
-
        controller: [ "$scope","$window",'$http', function($scope,$window,$http) {
-
        }],
-
         template : '<div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">' + 
-
                     '<div class="modal-dialog">' +
-
         '<div class="modal-content">' +
-
             '<div class="modal-header">' +
-
                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-
                 '<h4 class="modal-title" id="myModalLabel">Validación Usuario</h4>' +
-
             '</div>' +
-
             '<div class="modal-body"> ' +
-
                  '<h4> Usuario o clave incorrectos </h4> ' +
-
                   '<div><label id="nombreCentro"></label>' +
-
             '</div>' +
-
             '<div class="modal-footer">' +                
-
                 '<button type="button" class="btn btn-default" data-dismiss="modal"  >ACEPTAR</button>' +
-
             '</div>' +        
-
         '</div>' +        
-
     '</div>' +    
-
-'</div>' +
-
+  '</div>' +
 '</div>'
-
     };
-
   }])
 
-
-
-
-
   .controller('InicioCtrl',['$scope','$modal','$document', '$q', 'TareasResource', '$log', '$cookieStore', '$location','$window', function ($scope,$modal,$document,$q,TareasResource, $log, $cookieStore, $location,$window) {
-
-      
-
     if ($window.sessionStorage.getItem('tipoUsuario') == "null" )
-
       {
-
          $location.path('/menu');
-
          return;
-
-
-
        }
-
-
-
       if ($window.sessionStorage.getItem('tipoUsuario')==0)
-
          {
-
           $scope.Titulo ="Administrador";
-
          }
-
-
-
         if ($window.sessionStorage.getItem('tipoUsuario')==1)
-
         {
-
           $scope.Titulo ="Investigador";
-
         }    
-
-
-
        if($window.sessionStorage.getItem('tipoUsuario')==2)
-
         {
-
           $scope.Titulo ="GRUPO";
-
         }
-
-
-
-
-
          if($window.sessionStorage.getItem('tipoUsuario')==3)
-
         {
-
           $scope.Titulo ="CONVOCATORIA";
-
         }
-
-
-
         if($window.sessionStorage.getItem('tipoUsuario')==4)
-
         {
-
           $scope.Titulo ="PROPUESTAS";
-
         }
-
-
-
         if($window.sessionStorage.getItem('tipoUsuario')==5)
-
         {
-
           $scope.Titulo ="SEMILLERO";
-
         }
-
-
-
          if($window.sessionStorage.getItem('tipoUsuario')==6)
-
         {
-
           $scope.Titulo ="EVALUACIÓN PROPUESTAS";
-
         }
-
-
-
       if ( $window.sessionStorage.getItem('usuario') == "")
-
-      {
-
+        {
           $scope.$parent.mnuInvestiga =false;
-
             $scope.$parent.mnuAdmin = false;
-
             $scope.$parent.mnuConvocatoria = false;
-
       }
-
-
-
-    //  var inicioSesion = $q.defer();
-
-
-
-    // inicioSesion.promise.then(usrASesion);
-
- 
-
-
-
     function usrASesion(usr) {
-
-   
-
-     
-
-        
-
         $scope.usrConectado.nombre = usr[0].Usuario;
-
          $scope.usrConectado.puesto = 1;
-
-       //  $scope.estado = usr.show;
-
         $scope.usrConectado.estaConectado = true;
-
-       // $scope.usrConectado.Id = usr.Id_inve;      
-
-
-
          $cookieStore.put('estaConectado', true);
-
          $cookieStore.put('usuario', usr);
-
          $window.sessionStorage.setItem('usuario', JSON.stringify(usr[0]));
-
-
-
-
-
           if ($window.sessionStorage.getItem('tipoUsuario')==-1)
-
          {
-
             $scope.$parent.mnuAdmin = true;           
-
-
-
-             $location.path('/edit-usuario/' + usr[0].Id);
-
-            
-
+             $location.path('/edit-usuario/' + usr[0].Id);         
              return;
-
          }
-
-
-
          if ($window.sessionStorage.getItem('tipoUsuario')==0 && usr[0].Id_tipo ==0)
-
          {
-
             $scope.$parent.mnuAdmin = true;           
-
-
-
              $location.path('/menuAdministracionGeneral');
-
-            
-
-             return;
-
+            return;
          }
-
-
-
           if  ($window.sessionStorage.getItem('tipoUsuario')==1 && usr[0].Id_tipo ==1)
-
           {
-
             $scope.$parent.mnuInvestiga =true;
-
             $scope.$parent.mnuAdmin = false;
-
             $scope.$parent.mnuConvocatoria = false;
-
-
-
-            var executesql = TareasResource.SQL({Accion:'S',SQL:'SELECT INV_CODI,INV_NOMB,INV_APEL FROM sgi_inve WHERE INV_CODI_USUA=' + usr[0].Id});
-
+            var datos = {
+              Accion:'SELECT',
+              Usuario:usr[0].Id
+            }
+            var executesql = TareasResource.prInvestigador(datos);
                 executesql.then(function(result){
-
                   if (result.data[0]==null) 
-
                   {
-
                     $window.alert("No existe el investigador para el actual usuario");
-
                      $window.sessionStorage.setItem('tipoUsuario',null);
-
                       $window.sessionStorage.setItem('usuario',null);
-
                        $location.path('/menu');
-
                     return;
-
                   }
-
-                   $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
-
-
-
-                     $scope.$parent.idInve= result.data[0].INV_CODI
-
+                  $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
+                  $scope.$parent.idInve= result.data[0].INV_CODI
                   $location.path('/edit-investigador/'+ result.data[0].INV_CODI );
-
                   return;
-
                 });            
-
-            
-
           }
-
-
-
          if  ($window.sessionStorage.getItem('tipoUsuario')==2 && usr[0].Id_tipo ==1)
-
          {
-
            var executesql = TareasResource.SQL({Accion:'S',SQL:'SELECT INV_CODI,INV_NOMB,INV_APEL FROM sgi_inve WHERE INV_CODI_USUA=' + usr[0].Id});
-
                 executesql.then(function(result){
-
-                   $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
-
-            $location.path('/grupo');
-
+                $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
+                $location.path('/grupo');
             return;
-
           });
-
-         }
-
-
-
-        
-
+         }     
           if  ($window.sessionStorage.getItem('tipoUsuario')==4 && usr[0].Id_tipo ==1)
-
          {
 
            var executesql = TareasResource.SQL({Accion:'S',SQL:'SELECT INV_CODI,INV_NOMB,INV_APEL FROM sgi_inve WHERE INV_CODI_USUA=' + usr[0].Id});
-
                 executesql.then(function(result){
-
                    $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
-
             $location.path('/propuesta');
-
             return;
-
           });
-
          }
-
-
-
-
 
         if  ($window.sessionStorage.getItem('tipoUsuario')==3 && usr[0].Id_tipo ==0)
-
          {
-
             $location.path('/convocatoria');
-
             return;
-
          }
 
-       
-
-
-
-
-
          if  ($window.sessionStorage.getItem('tipoUsuario')==5 && usr[0].Id_tipo ==1)
-
          {
-
           $scope.$parent.mnuInvestiga =false;
-
             $scope.$parent.mnuAdmin = false;
-
             $scope.$parent.mnuConvocatoria = false;
-
            var executesql = TareasResource.SQL({Accion:'S',SQL:'SELECT INV_CODI,INV_NOMB,INV_APEL FROM sgi_inve WHERE INV_CODI_USUA=' + usr[0].Id});
-
                 executesql.then(function(result){
-
                    $window.sessionStorage.setItem('investigador', JSON.stringify(result.data[0]));
-
             $location.path('/semillero');
-
             return;
-
           });
 
          }
-
-
-
-
-
           if  ($window.sessionStorage.getItem('tipoUsuario')==6 && usr[0].Id_tipo ==1)
-
          {
 
           $scope.$parent.mnuInvestiga =false;
-
             $scope.$parent.mnuAdmin = false;
-
             $scope.$parent.mnuConvocatoria = false;
-
            var executesql = TareasResource.SQL({Accion:'S',SQL:'SELECT I.INV_CODI,I.INV_NOMB,I.INV_APEL FROM sgi_inve AS I INNER JOIN sgi_prop_conv_juez AS J ON J.PCJU_INV_CODI=I.INV_CODI  WHERE I.INV_CODI_USUA=' + usr[0].Id});
-
                 executesql.then(function(result){
 
                   if (result.data[0]!=null)
