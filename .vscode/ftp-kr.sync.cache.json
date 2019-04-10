@@ -1,0 +1,510 @@
+{
+  "ftp://ftp.grupoguane.com:21@grupogua": {
+    "public_html": {
+      "AppInvestigacion4": {
+        ".vscode": {},
+        "CONRESO": {},
+        "CONTEXTO": {},
+        "PROCARTA": {},
+        "PROPUESTA": {},
+        "PROTEXTO": {},
+        "SEMILLERO": {},
+        "app": {
+          "scripts": {
+            "app.js": {
+              "type": "-",
+              "size": 17746,
+              "lmtime": 1554862755324,
+              "modified": false
+            },
+            "controllers": {
+              "area.js": {
+                "type": "-",
+                "size": 6147,
+                "lmtime": 0,
+                "modified": false
+              },
+              "atributo.js": {
+                "type": "-",
+                "size": 7094,
+                "lmtime": 0,
+                "modified": false
+              },
+              "avalgruposemillero.js": {
+                "type": "-",
+                "size": 6202,
+                "lmtime": 0,
+                "modified": false
+              },
+              "cambioclave.js": {
+                "type": "-",
+                "size": 1657,
+                "lmtime": 0,
+                "modified": false
+              },
+              "centro.js": {
+                "type": "-",
+                "size": 6087,
+                "lmtime": 0,
+                "modified": false
+              },
+              "convocatoria.js": {
+                "type": "-",
+                "size": 13791,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-area.js": {
+                "type": "-",
+                "size": 2245,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-atributo.js": {
+                "type": "-",
+                "size": 1709,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-centro.js": {
+                "type": "-",
+                "size": 3101,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-convocatoria.js": {
+                "type": "-",
+                "size": 30423,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-copysemillero.js": {
+                "type": "-",
+                "size": 69916,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-evaluador.js": {
+                "type": "-",
+                "size": 4498,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-granarea.js": {
+                "type": "-",
+                "size": 1364,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-grupo.js": {
+                "type": "-",
+                "size": 65593,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-investigador.js": {
+                "type": "-",
+                "size": 76728,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-parametroEvaluacion.js": {
+                "type": "-",
+                "size": 2552,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-propuesta.js": {
+                "type": "-",
+                "size": 21458,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-semillero.js": {
+                "type": "-",
+                "size": 69916,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-semillero1.js": {
+                "type": "-",
+                "size": 76168,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-sgiConv.js": {
+                "type": "-",
+                "size": 3975,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-sgiTipoConv.js": {
+                "type": "-",
+                "size": 1267,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-usuario.js": {
+                "type": "-",
+                "size": 5564,
+                "lmtime": 0,
+                "modified": false
+              },
+              "edit-zona.js": {
+                "type": "-",
+                "size": 1947,
+                "lmtime": 0,
+                "modified": false
+              },
+              "empleados.js": {
+                "type": "-",
+                "size": 273,
+                "lmtime": 0,
+                "modified": false
+              },
+              "escalaEvaluacion.js": {
+                "type": "-",
+                "size": 5827,
+                "lmtime": 0,
+                "modified": false
+              },
+              "evaluador.js": {
+                "type": "-",
+                "size": 5300,
+                "lmtime": 0,
+                "modified": false
+              },
+              "gestionbasedatos.js": {
+                "type": "-",
+                "size": 2298,
+                "lmtime": 0,
+                "modified": false
+              },
+              "granarea.js": {
+                "type": "-",
+                "size": 124,
+                "lmtime": 0,
+                "modified": false
+              },
+              "grupo.js": {
+                "type": "-",
+                "size": 23665,
+                "lmtime": 0,
+                "modified": false
+              },
+              "inicio.js": {
+                "type": "-",
+                "size": 11323,
+                "lmtime": 1554866148385,
+                "modified": false
+              },
+              "investigador.js": {
+                "type": "-",
+                "size": 19176,
+                "lmtime": 0,
+                "modified": false
+              },
+              "main.js": {
+                "type": "-",
+                "size": 99,
+                "lmtime": 0,
+                "modified": false
+              },
+              "menu.js": {
+                "type": "-",
+                "size": 1559,
+                "lmtime": 0,
+                "modified": false
+              },
+              "menuAdministracionGeneral.js": {
+                "type": "-",
+                "size": 846,
+                "lmtime": 0,
+                "modified": false
+              },
+              "menuConvocatoriaPropuesta.js": {
+                "type": "-",
+                "size": 1206,
+                "lmtime": 0,
+                "modified": false
+              },
+              "menuReporte.js": {
+                "type": "-",
+                "size": 613,
+                "lmtime": 0,
+                "modified": false
+              },
+              "nav.js": {
+                "type": "-",
+                "size": 921,
+                "lmtime": 0,
+                "modified": false
+              },
+              "parametroEvaluacion.js": {
+                "type": "-",
+                "size": 5323,
+                "lmtime": 0,
+                "modified": false
+              },
+              "propuesta-atributo-convocatoria.js": {
+                "type": "-",
+                "size": 9367,
+                "lmtime": 0,
+                "modified": false
+              },
+              "propuesta-atributo.js": {
+                "type": "-",
+                "size": 7840,
+                "lmtime": 0,
+                "modified": false
+              },
+              "propuesta-convocatoria-atributo-juez.js": {
+                "type": "-",
+                "size": 10237,
+                "lmtime": 0,
+                "modified": false
+              },
+              "propuesta.js": {
+                "type": "-",
+                "size": 10169,
+                "lmtime": 0,
+                "modified": false
+              },
+              "prueba.js": {
+                "type": "-",
+                "size": 358,
+                "lmtime": 0,
+                "modified": false
+              },
+              "semillero.js": {
+                "type": "-",
+                "size": 12193,
+                "lmtime": 0,
+                "modified": false
+              },
+              "sgiConv.js": {
+                "type": "-",
+                "size": 112,
+                "lmtime": 0,
+                "modified": false
+              },
+              "sgiTipoConv.js": {
+                "type": "-",
+                "size": 116,
+                "lmtime": 0,
+                "modified": false
+              },
+              "tareas.js": {
+                "type": "-",
+                "size": 921,
+                "lmtime": 0,
+                "modified": false
+              },
+              "usuario.js": {
+                "type": "-",
+                "size": 5386,
+                "lmtime": 0,
+                "modified": false
+              },
+              "zona.js": {
+                "type": "-",
+                "size": 5932,
+                "lmtime": 0,
+                "modified": false
+              }
+            },
+            "filters": {},
+            "js": {},
+            "libs": {},
+            "services": {
+              "Rest.inc.php": {
+                "type": "-",
+                "size": 3502,
+                "lmtime": 0,
+                "modified": false
+              },
+              "api.php": {
+                "type": "-",
+                "size": 28944,
+                "lmtime": 0,
+                "modified": false
+              },
+              "borrarbinario.php": {
+                "type": "-",
+                "size": 603,
+                "lmtime": 0,
+                "modified": false
+              },
+              "config.php": {
+                "type": "-",
+                "size": 717,
+                "lmtime": 0,
+                "modified": false
+              },
+              "config_ant.php": {
+                "type": "-",
+                "size": 721,
+                "lmtime": 0,
+                "modified": false
+              },
+              "crud.js": {
+                "type": "-",
+                "size": 5358,
+                "lmtime": 1554865844682,
+                "modified": false
+              },
+              "descargarbinario.php": {
+                "type": "-",
+                "size": 310,
+                "lmtime": 0,
+                "modified": false
+              },
+              "enviar.php": {
+                "type": "-",
+                "size": 3385,
+                "lmtime": 0,
+                "modified": false
+              },
+              "enviarbinario.php": {
+                "type": "-",
+                "size": 3220,
+                "lmtime": 0,
+                "modified": false
+              },
+              "error_log": {
+                "type": "-",
+                "size": 223068,
+                "lmtime": 0,
+                "modified": false
+              },
+              "executesql.php": {
+                "type": "-",
+                "size": 17424,
+                "lmtime": 1554863614591,
+                "modified": false
+              },
+              "executesqlmulti.php": {
+                "type": "-",
+                "size": 3196,
+                "lmtime": 0,
+                "modified": false
+              },
+              "font": {},
+              "fpdf.php": {
+                "type": "-",
+                "size": 48341,
+                "lmtime": 0,
+                "modified": false
+              },
+              "gestionarchivo.php": {
+                "type": "-",
+                "size": 4104,
+                "lmtime": 0,
+                "modified": false
+              },
+              "pdf.php": {
+                "type": "-",
+                "size": 8373,
+                "lmtime": 0,
+                "modified": false
+              },
+              "pdfConvocatoria.php": {
+                "type": "-",
+                "size": 4252,
+                "lmtime": 0,
+                "modified": false
+              },
+              "pdfGrupo.php": {
+                "type": "-",
+                "size": 7375,
+                "lmtime": 0,
+                "modified": false
+              },
+              "prIniciar.php": {
+                "type": "-",
+                "size": 1189,
+                "lmtime": 1554866227699,
+                "modified": false
+              },
+              "prIniciiar.php": {
+                "type": "-",
+                "size": 0,
+                "lmtime": 1554865434377,
+                "modified": false
+              },
+              "proyecto.php": {
+                "type": "-",
+                "size": 1397,
+                "lmtime": 0,
+                "modified": false
+              }
+            }
+          }
+        },
+        "basedatos.sql": {
+          "type": "-",
+          "size": 4401983,
+          "lmtime": 0,
+          "modified": false
+        },
+        "bower.json": {
+          "type": "-",
+          "size": 478,
+          "lmtime": 0,
+          "modified": false
+        },
+        "instrucciones.txt": {
+          "type": "-",
+          "size": 322,
+          "lmtime": 0,
+          "modified": false
+        },
+        "investigador.sql": {
+          "type": "-",
+          "size": 13722,
+          "lmtime": 0,
+          "modified": false
+        },
+        "investigadorul.sql": {
+          "type": "-",
+          "size": 12929,
+          "lmtime": 0,
+          "modified": false
+        },
+        "karma-e2e.conf.js": {
+          "type": "-",
+          "size": 1348,
+          "lmtime": 0,
+          "modified": false
+        },
+        "karma.conf.js": {
+          "type": "-",
+          "size": 1473,
+          "lmtime": 0,
+          "modified": false
+        },
+        "login": {},
+        "mnuPropuesta.js": {
+          "type": "-",
+          "size": 953,
+          "lmtime": 0,
+          "modified": false
+        },
+        "package.json": {
+          "type": "-",
+          "size": 1571,
+          "lmtime": 0,
+          "modified": false
+        },
+        "sftp-config.json": {
+          "type": "-",
+          "size": 1458,
+          "lmtime": 0,
+          "modified": false
+        },
+        "test": {}
+      }
+    }
+  },
+  "$version": 1
+}

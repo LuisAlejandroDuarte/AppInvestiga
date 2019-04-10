@@ -499,17 +499,15 @@ angular.module('listaTareasApp')
 
       {
 
-        Accion :'S',
-
-        SQL:"SELECT USE_COD_TIPO AS Id_tipo,USE_CODI AS Id,USE_USUA AS Usuario," +
-
-        " concat(USE_NOMB,' ',USE_APEL) AS Nombre FROM sgi_user WHERE USE_USUA ='" + $scope.usuario + "' AND USE_CLAV ='" +  md5($scope.clave) + "'"
+        Accion :'Iniciar',
+        Usuario: $scope.usuario,
+        Clave: md5($scope.clave)
 
       }
 
 
 
-      var loguearse = TareasResource.SQL(datos);
+      var loguearse = TareasResource.prIniciar(datos);
 
         loguearse.then(function(result){
 

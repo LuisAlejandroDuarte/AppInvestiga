@@ -1,209 +1,80 @@
 'use strict';
-
-
-
 var config = {
-
 headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
-
 };
-
-
 var acentos = {
-
 	headers : {"Content-Type": "text/html;charset=utf-8"}
 }
 
-
 angular.module('listaTareasApp')
-
   .factory('TareasResource', function($resource,$http) {
-
     var servicio = {
-
-
-
 		login: $resource('scripts/services/api.php?url=login', {}, {
-
 		query: {method: 'GET', params: {Usuario: '@Usuario',Contrasena: '@Contrasena'},isArray:true}	
-
 			}),
-
-
 
 		empleados: $resource('scripts/services/api.php?url=grupo'),
-
-
-
 		granareas: $resource('scripts/services/api.php?url=granarea'),
-
-
-
 		getIdGranArea: $resource('scripts/services/api.php?url=granareaId', {}, {
-
 		query: {method: 'POST',params: {IdGranArea: '@IdGranArea'}}
-
 		}),
-
-
-
 		updateGranArea: $resource('scripts/services/api.php?url=updateGranArea', {}, {
-
 		query: {method: 'POST',params: {IdArea: '@idArea', IdGranArea: '@datosGranArea'}}
-
 		}),
-
-
-
-		
-
-		
-
 		insertGranArea: $resource('scripts/services/api.php?url=insertGranArea', {}, {
-
 		query: {method: 'POST',params: {IdArea: '@idArea', IdGranArea: '@datosGranArea'}}
-
 		}),		
-
-
-
 		updateArea: $resource('scripts/services/api.php?url=updateArea', {}, {
-
 		query: {method: 'POST',params: {IdArea: '@idArea',idGranArea: '@idGranArea', nombreArea: '@nombreArea'}}
-
 		}),
-
-
-
 		insertArea: $resource('scripts/services/api.php?url=insertArea', {}, {
-
 		query: {method: 'POST',params: {datosArea: '@datosArea'}}
-
 		}),
-
-
-
 		getIdArea: $resource('scripts/services/api.php?url=areaId', {}, {
-
 		query: {method: 'POST',params: {IdArea: '@IdArea'}}
-
 		}),
-
-
-
-
-
-
-
 		validaExisteRegistro: $resource('scripts/services/api.php?url=validaExisteRegistro/:Tabla/:Campo/:Valor', {
-
 										Tabla: '@Tabla',
-
 										Campo: '@Campo',
-
 										Valor: '@Valor'}, {
-
 		query: {method: 'GET',isArray:true}	
-
-			}),
-
-
-
-		// execute: $resource('scripts/services/api.php?url=executeSQL/:Accion/:SQL', {
-
-		// 								Accion: '@Accion',
-
-		// 								SQL: '@SQL'},{
-
-		// query: {method: 'GET',isArray:true}
-
-		// 	})
-
-
+		}),
 
 		execute: $resource('scripts/services/api.php?url=execute', {},{										
-
-		query: {method: 'POST',params:{Accion: '@Accion',SQL: '@SQL'},isArray:true}
-
-			}),
-
-
-
-
-
+		query: {method: 'POST',params:{Accion: '@Accion',SQL:'@SQL', Pr:'@Pr',PAR:'@PAR'},isArray:true}
+		}),
 		createProyectoProducto: $resource('scripts/services/api.php?url=createProyectoProducto', {},{										
-
 		query: {method: 'POST',params:{Lista: '@Lista',idProy: '@idProy',idInve:'@idInve'},isArray:true}
-
 			}),
-
-
-
-
-
-		enviararchivo: function(datos){
-
-    	  	
-
-    	  	// var data = {
-
-    	  	// 	Accion : Accion,
-
-    	  	// 	SQL : SQL    	  		
-
-    	  	// };
-
-                     
-
+		enviararchivo: function(datos){                     
     	  	  return $http.post('scripts/services/enviar.php', datos);  
-
 		},
-
-
-
-	    enviarProyectoProducto: function(datos){    	  	                     
-
+    enviarProyectoProducto: function(datos){    	  	                     
     	  	  return $http.post('scripts/services/proyecto.php', datos);  
-
 		},
-
-
-
 			SQL : function(datos) {
-
-
-
 	  		  return $http.post('scripts/services/executesql.php', datos);  
-
-
-
-	  	},
-	  
+			},
+			
+			prIniciar : function(datos) {
+				return $http.post('scripts/services/prIniciar.php', datos);  
+		},
 
 
 	  	PDF : function(datos) {
-	  				return  $http({
-	  				
+	  				return  $http({	  				
 		  				method: "post",
 						url: 'scripts/services/pdf.php',
 			            data: datos,
 	        		    transformRequest: angular.identity,
 	            		headers: { 'Content-Type': 'application/json' },
 	            		responseType: 'arraybuffer'  					
-
   				},
-
-  				 function errorCallback(response) {
-
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
-
+  				 function errorCallback(response) {    		
   					});     				                      	  
 
 			},
-
-		
+	
 		PdfConvocatoria : function(datos) {
 	  				return  $http({
 	  				
@@ -217,17 +88,11 @@ angular.module('listaTareasApp')
   				},
 
   				 function errorCallback(response) {
-
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
-
   					});     				                      	  
 
 			},	
 	   PdfGrupo : function(datos) {
-	  				return  $http({
-	  				
+	  				return  $http({	  				
 		  				method: "post",
 						url: 'scripts/services/pdfGrupo.php',
 			            data: datos,
@@ -239,114 +104,55 @@ angular.module('listaTareasApp')
 
   				 function errorCallback(response) {
 
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
-
   					});     				                      	  
 
 			},				
-
 	  	SQLMulti : function(datos) {
-
-
-
 	  		  return $http.post('scripts/services/executesqlmulti.php', datos);  
-
-
-
 	  	},
-
 	  	enviararchivobinario: function(datos){
-
-    	  	
-
     	return  $http({
-
   					method: 'post',
-
   					url: 'scripts/services/enviarbinario.php',
-
   					data:datos,
-
   					transformRequest: angular.identity,
-
   					enctype:'multipart/form-data',
-
             		headers: {'Content-Type': undefined}
 
   				},
-
   				 function errorCallback(response) {
-
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
-
   					});     				                      	  
 
 			},
-
-
-
-		borrarbinario: function(datos){
-
-    	  	
-
+		borrarbinario: function(datos){ 	  	
     	return  $http({
-
   					method: 'post',
-
   					url: 'scripts/services/borrarbinario.php',
-
   					data:datos,
-
   					transformRequest: angular.identity,
-
             		headers: {'Content-Type': undefined}
-
   				},
-
   				 function errorCallback(response) {
-
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
 
   					});     				                      	  
 
 			},
 
-		descargarbinario: function(datos){
-
-    	  	
-
+		descargarbinario: function(datos){ 	  	
     	return  $http({
-
   					method: 'post',
-
   					url: 'scripts/services/descargarbinario.php',
-
   					data:datos,
-
   					transformRequest: angular.identity,
-
             		headers: {'Content-Type': undefined}
 
   				},
 
   				 function errorCallback(response) {
-
-    				// called asynchronously if an error occurs
-
-    				// or server returns response with an error status.
 
   					});     				                      	  
 
 			}					
-
-
-
 		};
 
     return servicio;

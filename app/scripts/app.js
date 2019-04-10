@@ -507,21 +507,10 @@ angular.module("listaTareasApp", ['ngRoute','ngAnimate','ngLocale', 'ngResource'
 
             var investigadorID = parseInt($route.current.params.idInvestigador);
 
-            var dat = TareasResource.execute.query({Accion: 'S',
+           
 
-                         SQL: "SELECT INV.INV_CODI,INV_CODI_USUA, INV.INV_IDEN,INV.INV_TIPO_DOCU_CODI,INV.INV_NOMB,INV.INV_APEL,INV.INV_LINK_CVLA,INV_TICA_CODI, " +
-
-                          " INV.INV_FECH_NACI,INV.INV_MAIL,INV.INV_CENT_CODI,INV.INV_PROG_ACAD_CODI, " +
-
-                          " INV.INV_TELE_CELU,INV.inv_foto, ZONA.ZON_NOMB ,ESCUELA.ESC_NOMB FROM sgi_inve AS INV LEFT JOIN sgi_cent AS CENTRO ON " + 
-
-                          " CENTRO.CEN_CODI = INV.INV_CENT_CODI LEFT JOIN sgi_prog_acad AS PROGRAMA ON " + 
-
-                          " PROGRAMA.PAC_CODI = INV.INV_PROG_ACAD_CODI LEFT JOIN sgi_zona AS ZONA ON ZONA.ZON_CODI = CENTRO.CEN_ZONA_CODI " + 
-
-                          " LEFT JOIN sgi_escu AS ESCUELA ON ESCUELA.ESC_CODI = PROGRAMA.PAC_ESCU_CODI " +
-
-                          " WHERE INV.INV_CODI =" + investigadorID + "" });                           
+            var dat = TareasResource.execute.query({Accion: 'SELECT',pr:'prInvestigador',
+                         PAR: investigadorID  });                           
 
             return dat;         
 
