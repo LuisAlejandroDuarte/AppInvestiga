@@ -3,325 +3,146 @@
  angular.module('listaTareasApp')
 
 .directive('myModalgrupo', function() {
-       return {
-        restrict : 'AE',    
-        controller: [ "$scope","$window",'$http','TareasResource', function($scope,$window,$http,TareasResource) {
-            $scope.afirmaEliminar = function() {
-                    var Codigo = $('#myModal').data('id').toString(); 
-                    var user = JSON.parse($window.sessionStorage.getItem('investigador'));
-                    var Execute = {
-                        Accion:'S',
-                        SQL:'SELECT Count(IGR_GRUP_CODI) As Count FROM sgi_inve_grup WHERE IGR_GRUP_CODI=' + Codigo + ' AND IGR_FECH_TERM is null AND IGR_INVE_IDEN<>' + user.INV_CODI
-
-
+  return {
+    restrict : 'AE',    
+      controller: [ "$scope","$window",'$http','TareasResource', function($scope,$window,$http,TareasResource) {
+        $scope.afirmaEliminar = function() {
+          var Codigo = $('#myModal').data('id').toString(); 
+            var user = JSON.parse($window.sessionStorage.getItem('investigador'));
+              var Execute = {
+                Accion:'SELECTCOUNTGRUPOINVE',
+                coidgo: Codigo,
+                INV_CODI: user.INV_CODI
+                }
+                var result= TareasResource.prGrupo(Execute)
+                  .then(function(result2){
+                   if (result2.data[0].Count>0)
+                   {
+                    $window.alert("Debe primero eliminar los investigadores relacionados al grupo");
+                    $('#myModal').data('id', 0).modal('hide'); 
+                    return;
                     }
-
-
-
-                      var result= TareasResource.SQL(Execute)
-
-                       .then(function(result2){
-
-
-
+                    else
+                    {
+                      Execute = {
+                      Accion:'SELECTCOUNTGRUPOLINEA',
+                      Coidgo: Codigo
+                      }
+                      result= TareasResource.prGrupo(Execute)
+                        .then(function(result2){
+                          if (result2.data[0].Count>0)
+                          {
+                           $window.alert("Debe primero eliminar las líneas de investigación relacionados al grupo");
+                           $('#myModal').data('id', 0).modal('hide'); 
+                           return;
+                          }
+                          else
+                          {
+                            Execute = {
+                            Accion:'SELECTCOUNTGRUPOSEMILLA',
+                            Codigo:Codigo
+                            }
+                            result= TareasResource.prGrupo(Execute)
+                            .then(function(result2){
+                            if (result2.data[0].Count>0)
+                            {
+                              $window.alert("Debe primero eliminar los semilleros relacionados al grupo");
+                              $('#myModal').data('id', 0).modal('hide'); 
+                              return;
+                            }
+                            else
+                            {
+                              Execute = {
+                              Accion:'SELECTCOUNTGRUPOPROYECTO',
+                              Coidgo: Codigo 
+                              }
+                              result= TareasResource.prGrupo(Execute)
+                             .then(function(result2){
                               if (result2.data[0].Count>0)
-
+                              {
+                               $window.alert("Debe primero eliminar los producción  relacionados al grupo");
+                               $('#myModal').data('id', 0).modal('hide'); 
+                               return;
+                               }
+                               else
+                               {
+                                Execute = {
+                                  Accion:'SELECTCOUNTPROGRUPO',
+                                  Codigo:Codigo
+                                 }
+                                result= TareasResource.prGrupo(Execute)
+                                .then(function(result2){
+                                if (result2.data[0].Count>0)
                                 {
-
-                                  $window.alert("Debe primero eliminar los investigadores relacionados al grupo");
-
-                                    $('#myModal').data('id', 0).modal('hide'); 
-
-                                  return;
-
+                                 $window.alert("Debe primero eliminar los plan trabajo grupo relacionados al grupo");
+                                 $('#myModal').data('id', 0).modal('hide'); 
+                                 return;
                                 }
-
                                 else
-
                                 {
-
-                                    Execute = {
-
-                                     Accion:'S',
-
-                                     SQL:'SELECT Count(gli_codi) As Count FROM sgi_grup_line_inve WHERE gli_grup_codi=' + Codigo + ' AND  gli_fech_term is null'
-
-                                    }
-
-
-
-                                    result= TareasResource.SQL(Execute)
-
-                                        .then(function(result2){
-
-
-
-                                               if (result2.data[0].Count>0)
-
-                                                {
-
-                                                  $window.alert("Debe primero eliminar las líneas de investigación relacionados al grupo");
-
-                                                  $('#myModal').data('id', 0).modal('hide'); 
-
-                                                  return;
-
-                                                }
-
-                                                else
-
-                                                {
-
-
-
-
-
-                                                        Execute = {
-
-                                                         Accion:'S',
-
-                                                         SQL:'SELECT Count(sgr_codi) As Count FROM sgi_grup_semi WHERE sgr_grup_codi=' + Codigo + ' AND  sgr_fech_term is null'
-
-                                                        }
-
-
-
-
-
-                                                          result= TareasResource.SQL(Execute)
-
-                                                            .then(function(result2){
-
-
-
-                                                                  if (result2.data[0].Count>0)
-
-                                                                        {
-
-                                                                          $window.alert("Debe primero eliminar los semilleros relacionados al grupo");
-
-                                                                         $('#myModal').data('id', 0).modal('hide'); 
-
-                                                                          return;
-
-                                                                        }
-
-                                                                        else
-
-                                                                        {
-
-
-
-                                                                             Execute = {
-
-                                                                                Accion:'S',
-
-                                                                                SQL:'SELECT Count(id_proy) As Count FROM sgi_grup_proy WHERE id_grup=' + Codigo + ' AND fech_term is null'
-
-                                                                                }
-
-                                                                                   result= TareasResource.SQL(Execute)
-
-                                                                                    .then(function(result2){
-
-                                                                                       if (result2.data[0].Count>0)
-
-                                                                                        {
-
-                                                                                          $window.alert("Debe primero eliminar los producción  relacionados al grupo");
-
-                                                                                         $('#myModal').data('id', 0).modal('hide'); 
-
-                                                                                          return;
-
-                                                                                        }
-
-                                                                                        else
-
-                                                                                        {
-
-                                                                                              Execute = {
-
-                                                                                                Accion:'S',
-
-                                                                                                SQL:'SELECT Count(  pgr_plnt_codi) As Count FROM sgi_plnt_grup WHERE pgr_grup_codi=' + Codigo + ' AND pgr_fech_term is null'
-
-                                                                                                }
-
-
-
-                                                                                                  result= TareasResource.SQL(Execute)
-
-                                                                                                         .then(function(result2){
-
-
-
-                                                                                                              if (result2.data[0].Count>0)
-
-                                                                                                                {
-
-                                                                                                                  $window.alert("Debe primero eliminar los plan trabajo grupo relacionados al grupo");
-
-                                                                                                                 $('#myModal').data('id', 0).modal('hide'); 
-
-                                                                                                                  return;
-
-                                                                                                                }
-
-                                                                                                                else
-
-                                                                                                                {
-
-                                                                                                                     $http.post("scripts/services/api.php?url=executeSQL/D/DELETE FROM sgi_grup" +
-
-                                                                                                                            " WHERE gru_codi = " + Codigo, $scope.formData)
-
-                                                                                                                    .success(function(data) {  
-
-
-
-                                                                                                                    var multiple =[];
-
-                                                                                                                        multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_inve_grup WHERE IGR_GRUP_CODI=' + Codigo });  
-
-                                                                                                                        multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_line_inve WHERE gli_grup_codi=' + Codigo  }); 
-
-                                                                                                                        multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_semi WHERE sgr_grup_codi=' + Codigo  }); 
-
-                                                                                                                        multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_plnt_grup WHERE pgr_grup_codi=' + Codigo  }); 
-
-                                                                                                                        multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_proy WHERE id_grup=' + Codigo  }); 
-
-                                                                                                                     TareasResource.SQLMulti(multiple).then(function(result) {    
-
-                                                                                                                            
-
-                                                                                                                                $('#tablegrupo').bootstrapTable('remove', {
-
-                                                                                                                                        field: 'gru_codi',
-
-                                                                                                                                        values: Codigo
-
-                                                                                                                                });                                                                                                                                                                         
-
-
-
-                                                                                                                                $('#myModal').modal('hide');
-
-                                                                                                                             });
-
-                                                                                                                   
-
-                                                                                                                     })
-
-                                                                                                                    .error(function(data) {
-
-                                                                                                                        $('#myModal').modal('hide');
-
-                                                                                                                        alert(data['msg']);                        
-
-                                                                                                                    });  
-
-                                                                                                                                                    }
-
-
-
-                                                                                                         });
-
-                                                                                        }
-
-                                                                                    });
-
-                                                                             
-
-                                                                        }
-
-
-
-                                                            });
-
-                                                }
-
-
-
-                                        });
-
+                                 $http.post("scripts/services/api.php?url=executeSQL/D/DELETE FROM sgi_grup" +
+                                 " WHERE gru_codi = " + Codigo, $scope.formData)
+                                 .success(function(data) {  
+                                  var multiple =[];
+                                  multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_inve_grup WHERE IGR_GRUP_CODI=' + Codigo });  
+                                  multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_line_inve WHERE gli_grup_codi=' + Codigo  }); 
+                                  multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_semi WHERE sgr_grup_codi=' + Codigo  }); 
+                                  multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_plnt_grup WHERE pgr_grup_codi=' + Codigo  }); 
+                                  multiple.splice(0,0,{Accion:'D',SQL:'DELETE FROM sgi_grup_proy WHERE id_grup=' + Codigo  }); 
+                                  TareasResource.SQLMulti(multiple).then(function(result) {    
+                                  $('#tablegrupo').bootstrapTable('remove', {
+                                    field: 'gru_codi',
+                                    values: Codigo
+                                  });                                                                                                                                                                         
+                                  $('#myModal').modal('hide');
+                                    });
+                                  })
+                                  .error(function(data) {
+                                    $('#myModal').modal('hide');
+                                    alert(data['msg']);                        
+                                  });  
                                 }
-
-                       });
-
-                                    
-
-                };
-
-               
-
+                              });
+                             }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              };               
             }],
-
-
-
         template : '<div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">' + 
-
-                    '<div class="modal-dialog">' +
-
+          '<div class="modal-dialog">' +
         '<div class="modal-content">' +
-
             '<div class="modal-header">' +
-
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-
                  '<h3 class="modal-title" id="myModalLabel">Advertencia!</h3> ' +
-
             '</div>' +
-
             '<div class="modal-body"> ' +
-
                  '<h4> Desea Borrar el grupo? </h4> ' +
-
                   '<div><label id="nombreGrupo"></label>' +
-
             '</div>' +
-
             '<div class="modal-footer">' +
-
                 '<button ng-click= "afirmaEliminar();" class="btn btn-danger"  id="btnYes" >Si</button>' +
-
                 '<button type="button" class="btn btn-default" data-dismiss="modal"  >No</button>' +
-
             '</div>' +        
-
         '</div>' +        
-
-    '</div>' +    
-
-'</div>' +
-
-'</div>',
-
-  
-
+      '</div>' +    
+    '</div>' +
+  '</div>',  
     }
 
 })
 
-
-
-
-
  .controller('ControladorGrupo', ['$scope','$window','$cookieStore','$location','TareasResource', function($scope,$window,$cookieStore,$location,TareasResource) {
-
-
-
     var user = JSON.parse($window.sessionStorage.getItem('investigador'));
-
     moment.locale('es');
       var admin = JSON.parse($window.sessionStorage.getItem('usuario'));
     $scope.btnNuevo=true;
     if (user==null || user==undefined)
-
-    {
-
-     
+    {   
        if (admin.Usuario!="admin")
        {
 

@@ -124,21 +124,24 @@ var idInve="";
             }]          
         }
       
+              var parametros = {
+                Accion:"SELECT1",
+                IdGrupo:IdGrupo
+              }
+              var dat = TareasResource.prGrupo(parametros);   
 
-              var dat = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT IG.igr_codi,G.gru_nomb AS Grupo,G.gru_codi, G.gru_colc_codi,G.gru_cate_colc, I.inv_codi,G.gru_aval_inst," + 
-            " G.gru_fech_ini AS Fecha,CONCAT(I.inv_nomb,'',I.inv_apel) As Investigador,G.gru_area_codi As selArea,G.gru_cent_codi As selCentro " + 
-            " FROM sgi_inve_grup AS IG  INNER JOIN sgi_grup AS G ON G.gru_codi = IG.igr_grup_codi " + 
-            " INNER JOIN sgi_inve As I ON I.inv_codi = IG.igr_inve_iden WHERE G.gru_codi =" + IdGrupo + "" });   
-
-            dat.$promise.then(function(investigador){
-              $scope.datos2= investigador;
-              $scope.datos2[0].gru_aval_inst =investigador[0].gru_aval_inst;
-              $scope.datos2[0].Fecha= new Date(moment(investigador[0].Fecha));
+            dat.then(function(investigador){
+              $('#myModal').hide();  
+              if (investigador.data[0]!=null)
+              {
+                $('#myModal').show();  
+              $scope.datos2= investigador.data;
+              $scope.datos2[0].gru_aval_inst =investigador.data[0].gru_aval_inst;
+              $scope.datos2[0].Fecha= new Date(moment(investigador.data[0].Fecha));
 
                var id_inve=0;
 
-             $scope.investigador2 = investigador;
+             $scope.investigador2 = investigador.data;
             $scope.investigador2.$promise.then(function(investigador){
 
                 $scope.tipoVinculacion = TareasResource.execute.query({Accion: 'S',
@@ -195,160 +198,150 @@ var idInve="";
                             });
                        });
                   });
+               });
 
-
-                      if (investigador[0].inv_codi==undefined)            
-                          id_inve=1;            
-                      else
-                          id_inve=investigador[0].inv_codi;    
-
-
-                         $scope.NombreGrupo =  investigador[0].Grupo;
-                                   $scope.FechaCreaGrupo = investigador[0].Fecha;
-
-                         $scope.datos = TareasResource.execute.query({Accion: 'S',
-                         SQL: ' select I.inv_nomb As Nombre,I.inv_apel As Apellido,C.CEN_CODI AS IdCentro, C.cen_nomb As Centro,Z.zon_nomb As ' + 
-                         ' ZONA,E.esc_nomb AS Escuela,P.pac_nomb AS Programa ' +
-                         ' from sgi_inve AS I INNER JOIN sgi_cent AS C ON I.inv_cent_codi = C.cen_codi INNER JOIN sgi_zona AS Z ON ' +
-                         ' Z.zon_codi=C.cen_zona_codi INNER JOIN sgi_prog_acad As P ON P.pac_codi = I.inv_prog_acad_codi INNER JOIN ' +
-                         ' sgi_escu AS E ON E.esc_codi = P.pac_escu_codi WHERE I.inv_codi=' +  user.INV_CODI }); 
-
-
-                             $scope.datos.$promise.then(function(result){
-
-                                  if (result[0].Nombre=="" || result[0].Nombre==undefined)
-                                  {
-                                    $window.alert("Debe completar la Información del Investigador");
-                                    return;
-                                  }
-
-                                    $scope.NombreInvestigador = result[0].Nombre;
-                                    $scope.ApellidoInvestigador = result[0].Apellido;
-                                    $scope.CentroInvestigador = result[0].Centro;
-                                    $scope.ZonaInvestigador = result[0].ZONA;  
-                                    $scope.ProgramaInvestigador = result[0].Programa;  
-                                    $scope.EscuelaInvestigador = result[0].Escuela;  
-
-                                     $scope.area =TareasResource.execute.query({Accion:'S',SQL:'SELECT ARE_CODI,ARE_NOMB from sgi_area'});
-                                     $scope.area.$promise.then(function(result){  
-                                     $scope.listArea =result;
-                                     $scope.centro =TareasResource.execute.query({Accion:'S',SQL:'SELECT CEN_CODI,CEN_NOMB from sgi_cent'});
-                                      $scope.centro.$promise.then(function(result){  
-                                        $scope.listCentro =result;
-                                            $scope.datos2[0].selArea = investigador[0].selArea;     
-
-
-                                                     var  Investigadores = TareasResource.execute.query({Accion: 'S',
-                                                         SQL: "SELECT IG.igr_codi AS Id,I.inv_codi AS Id2, CONCAT(I.inv_apel,'',I.inv_nomb) AS Nombre," +
-                                                         " IG.igr_fech_inic AS FechaInicia,IG.igr_fech_term AS FechaTermina,IG.igr_tipo_vinc_codi AS IdVincula, " + 
-                                                         " 2 AS Tipo FROM " + 
-                                                         " sgi_grup As G INNER JOIN sgi_inve_grup AS IG ON " +
-                                                         " G.gru_codi = IG.igr_grup_codi INNER JOIN sgi_inve AS I ON " +
-                                                         " I.inv_codi = IG.igr_inve_iden " + 
-                                                         " WHERE IG.igr_grup_codi = " +  IdGrupo });   
-                                           var tieneDatos1=false;
-                                           
-                                             $scope.Investigadores  =[];   
-                                            Investigadores.$promise.then(function(result1){
-                                                angular.forEach(result1, function(value, key){
-                                                  if (value.Nombre==undefined ||value.Nombre=="")                                
-                                                  {
-                                                    $scope.Investigadores  =[];                                
-                                                  }
-                                                  else
-                                                  {
-                                                    idInve =idInve + value.Id2  + ',';
-                                                    tieneDatos1 =true;
-                                                  }
-                                                              
-                                                });
-                                                if (tieneDatos1==true)
-                                                {
-                                                     $scope.Investigadores = result1;  
-                                                     idInve = idInve.substring(0,idInve.length-1); 
-                                                     if (idInve!="")
-                                                     {
-                                                     $scope.listProyectos =  TareasResource.execute.query({Accion: 'S',
-                                                          SQL: "SELECT P.pro_nomb,P.pro_codi FROM sgi_proy As P INNER JOIN sgi_proy_inve AS PI ON P.pro_codi = PI.id_proy WHERE " +
-                                                          " PI.id_inve IN (" + idInve + ") "});
-
-                                                      $scope.listProyectos.$promise.then(function(result){
-
-                                                       $scope.Proyectos =  TareasResource.execute.query({Accion: 'S',
-                                                          SQL: "SELECT PROY.PRO_NOMB As NombreProyecto,PROD.Nombre AS NombreProducto,PROD.Id As IdProd,PROY.PRO_CODI AS IdProy,GP.fech_ini,GP.fech_term,GP.id_grup AS IdGrupo " +
-                                                               " FROM sgi_grup_proy As GP INNER JOIN sgi_proy As PROY ON PROY.PRO_CODI = GP.id_proy " +
-                                                               " INNER JOIN sgi_prod AS PROD ON PROD.Id=GP.id_prod WHERE  GP.Id_grup=" + IdGrupo + " AND GP.Id_inve="+  user.INV_CODI });
-
-
-                                                        $scope.Proyectos.$promise.then(function(result){
-                                                          if (result[0].NombreProyecto !=undefined)                          
-                                                            $scope.Proyectos =result;
-                                                          else
-                                                            $scope.Proyectos =[];    
-
-                                                           $scope.planTrabajo = TareasResource.execute.query({Accion: 'S',
-                                                         SQL: 'SELECT pgr_plnt_codi As Id, pgr_path As Path,pgr_fech_inic As FechaInicio,pgr_fech_term AS FechaTermina,pgr_grup_codi As IdGrupo, ' +
-                                                         ' pgr_plnt_codi,pgr_nombre As Nombre FROM sgi_plnt_grup WHERE pgr_grup_codi=' + IdGrupo}); 
-
-                                                          $scope.planTrabajo.$promise.then(function(plan){
-
-                                                            if (plan[0].pgr_plnt_codi!=undefined)                            
-                                                               $scope.planTrabajo=plan;                              
-                                                            else
-                                                              $scope.planTrabajo=[];
-
-                                                                        var Semilleros = TareasResource.execute.query({Accion: 'S',
-                                                                           SQL: "SELECT GS.sgr_codi AS Id, S.sem_nomb AS Nombre,GS.sgr_fech_inic As FechaInicia, " + 
-                                                                           " GS.sgr_fech_term As FechaTermina, S.sem_codi AS Id2,3 As Tipo FROM " + 
-                                                                           " sgi_grup As G INNER JOIN sgi_grup_semi AS GS ON " +
-                                                                           " G.gru_codi = GS.sgr_grup_codi INNER JOIN sgi_semi AS S ON " +
-                                                                           " S.sem_codi = GS.sgr_semi_codi " + 
-                                                                           " WHERE GS.sgr_grup_codi = " +  $route.current.params.idGrupo + ""});
-                                                               var tieneDatos2=false;
-                                                               $scope.Semilleros  =[]; 
-                                                              Semilleros.$promise.then(function(result2){
-                                                                  angular.forEach(result2, function(value, key){
-                                                                    if (value.Nombre==undefined || value.Nombre=="")                                
-                                                                    {
-                                                                      $scope.Semilleros  =[];                                
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                      tieneDatos2 =true;
-                                                                    }
-                                                                                
-                                                                  });
-                                                                  if (tieneDatos2==true)
-                                                                        $scope.Semilleros = result2;    
-                                                                         $('#myModal').hide();         
-                                                              }); 
-
-                                                            
-                                                          });
-                                                        });
-                                                      });
-                                                    }
-
-
-                                                                  
-                                                }
-                                            }); 
-
-
-                                        });
-                              });  
-
-
-                            });
-
-                                                                        
-
-                       });
-
+           }
+           else
+           {
            
 
+           $scope.datos = TareasResource.execute.query({Accion: 'S',
+           SQL: ' select I.inv_nomb As Nombre,I.inv_apel As Apellido,C.CEN_CODI AS IdCentro, C.cen_nomb As Centro,Z.zon_nomb As ' + 
+           ' ZONA,E.esc_nomb AS Escuela,P.pac_nomb AS Programa ' +
+           ' from sgi_inve AS I INNER JOIN sgi_cent AS C ON I.inv_cent_codi = C.cen_codi INNER JOIN sgi_zona AS Z ON ' +
+           ' Z.zon_codi=C.cen_zona_codi INNER JOIN sgi_prog_acad As P ON P.pac_codi = I.inv_prog_acad_codi INNER JOIN ' +
+           ' sgi_escu AS E ON E.esc_codi = P.pac_escu_codi WHERE I.inv_codi=' +  user.INV_CODI }); 
 
-            });
+
+               $scope.datos.$promise.then(function(result){
+
+                    if (result[0].Nombre=="" || result[0].Nombre==undefined)
+                    {
+                      $window.alert("Debe completar la Información del Investigador");
+                      return;
+                    }
+
+                      $scope.NombreInvestigador = result[0].Nombre;
+                      $scope.ApellidoInvestigador = result[0].Apellido;
+                      $scope.CentroInvestigador = result[0].Centro;
+                      $scope.ZonaInvestigador = result[0].ZONA;  
+                      $scope.ProgramaInvestigador = result[0].Programa;  
+                      $scope.EscuelaInvestigador = result[0].Escuela;  
+
+                       $scope.area =TareasResource.execute.query({Accion:'S',SQL:'SELECT ARE_CODI,ARE_NOMB from sgi_area'});
+                       $scope.area.$promise.then(function(result){  
+                       $scope.listArea =result;
+                       $scope.centro =TareasResource.execute.query({Accion:'S',SQL:'SELECT CEN_CODI,CEN_NOMB from sgi_cent'});
+                        $scope.centro.$promise.then(function(result){  
+                          $scope.listCentro =result;
+                              $scope.datos2[0].selArea = investigador[0].selArea;     
+
+
+                                       var  Investigadores = TareasResource.execute.query({Accion: 'S',
+                                           SQL: "SELECT IG.igr_codi AS Id,I.inv_codi AS Id2, CONCAT(I.inv_apel,'',I.inv_nomb) AS Nombre," +
+                                           " IG.igr_fech_inic AS FechaInicia,IG.igr_fech_term AS FechaTermina,IG.igr_tipo_vinc_codi AS IdVincula, " + 
+                                           " 2 AS Tipo FROM " + 
+                                           " sgi_grup As G INNER JOIN sgi_inve_grup AS IG ON " +
+                                           " G.gru_codi = IG.igr_grup_codi INNER JOIN sgi_inve AS I ON " +
+                                           " I.inv_codi = IG.igr_inve_iden " + 
+                                           " WHERE IG.igr_grup_codi = " +  IdGrupo });   
+                             var tieneDatos1=false;
+                             
+                               $scope.Investigadores  =[];   
+                              Investigadores.$promise.then(function(result1){
+                                  angular.forEach(result1, function(value, key){
+                                    if (value.Nombre==undefined ||value.Nombre=="")                                
+                                    {
+                                      $scope.Investigadores  =[];                                
+                                    }
+                                    else
+                                    {
+                                      idInve =idInve + value.Id2  + ',';
+                                      tieneDatos1 =true;
+                                    }
+                                                
+                                  });
+                                  if (tieneDatos1==true)
+                                  {
+                                       $scope.Investigadores = result1;  
+                                       idInve = idInve.substring(0,idInve.length-1); 
+                                       if (idInve!="")
+                                       {
+                                       $scope.listProyectos =  TareasResource.execute.query({Accion: 'S',
+                                            SQL: "SELECT P.pro_nomb,P.pro_codi FROM sgi_proy As P INNER JOIN sgi_proy_inve AS PI ON P.pro_codi = PI.id_proy WHERE " +
+                                            " PI.id_inve IN (" + idInve + ") "});
+
+                                        $scope.listProyectos.$promise.then(function(result){
+
+                                         $scope.Proyectos =  TareasResource.execute.query({Accion: 'S',
+                                            SQL: "SELECT PROY.PRO_NOMB As NombreProyecto,PROD.Nombre AS NombreProducto,PROD.Id As IdProd,PROY.PRO_CODI AS IdProy,GP.fech_ini,GP.fech_term,GP.id_grup AS IdGrupo " +
+                                                 " FROM sgi_grup_proy As GP INNER JOIN sgi_proy As PROY ON PROY.PRO_CODI = GP.id_proy " +
+                                                 " INNER JOIN sgi_prod AS PROD ON PROD.Id=GP.id_prod WHERE  GP.Id_grup=" + IdGrupo + " AND GP.Id_inve="+  user.INV_CODI });
+
+
+                                          $scope.Proyectos.$promise.then(function(result){
+                                            if (result[0].NombreProyecto !=undefined)                          
+                                              $scope.Proyectos =result;
+                                            else
+                                              $scope.Proyectos =[];    
+
+                                             $scope.planTrabajo = TareasResource.execute.query({Accion: 'S',
+                                           SQL: 'SELECT pgr_plnt_codi As Id, pgr_path As Path,pgr_fech_inic As FechaInicio,pgr_fech_term AS FechaTermina,pgr_grup_codi As IdGrupo, ' +
+                                           ' pgr_plnt_codi,pgr_nombre As Nombre FROM sgi_plnt_grup WHERE pgr_grup_codi=' + IdGrupo}); 
+
+                                            $scope.planTrabajo.$promise.then(function(plan){
+
+                                              if (plan[0].pgr_plnt_codi!=undefined)                            
+                                                 $scope.planTrabajo=plan;                              
+                                              else
+                                                $scope.planTrabajo=[];
+
+                                                          var Semilleros = TareasResource.execute.query({Accion: 'S',
+                                                             SQL: "SELECT GS.sgr_codi AS Id, S.sem_nomb AS Nombre,GS.sgr_fech_inic As FechaInicia, " + 
+                                                             " GS.sgr_fech_term As FechaTermina, S.sem_codi AS Id2,3 As Tipo FROM " + 
+                                                             " sgi_grup As G INNER JOIN sgi_grup_semi AS GS ON " +
+                                                             " G.gru_codi = GS.sgr_grup_codi INNER JOIN sgi_semi AS S ON " +
+                                                             " S.sem_codi = GS.sgr_semi_codi " + 
+                                                             " WHERE GS.sgr_grup_codi = " +  $route.current.params.idGrupo + ""});
+                                                 var tieneDatos2=false;
+                                                 $scope.Semilleros  =[]; 
+                                                Semilleros.$promise.then(function(result2){
+                                                    angular.forEach(result2, function(value, key){
+                                                      if (value.Nombre==undefined || value.Nombre=="")                                
+                                                      {
+                                                        $scope.Semilleros  =[];                                
+                                                      }
+                                                      else
+                                                      {
+                                                        tieneDatos2 =true;
+                                                      }
+                                                                  
+                                                    });
+                                                    if (tieneDatos2==true)
+                                                          $scope.Semilleros = result2;    
+                                                           $('#myModal').hide();         
+                                                }); 
+
+                                              
+                                            });
+                                          });
+                                        });
+                                      }
+
+
+                                                    
+                                  }
+                              }); 
+
+
+                          });
+                });  
+
+
+              });
+           }
+      });
+          
                
 
         

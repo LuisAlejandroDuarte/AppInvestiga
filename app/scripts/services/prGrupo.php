@@ -46,9 +46,114 @@
            $resultArray[] = $tuple;         
         }               
     }
+  }
   
+    if ($Accion=="SELECTCOUNTGRUPOINVE")
+    {
+     $SQL="SELECT Count(IGR_GRUP_CODI) As Count FROM sgi_inve_grup " .
+     " WHERE IGR_GRUP_CODI=" . $d['Codigo'] . " AND IGR_FECH_TERM is null AND " .
+     " IGR_INVE_IDEN<>" . $d['INV_CODI'];
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    if ($Accion=="SELECTCOUNTGRUPOLINEA")
+    {
+     $SQL="SELECT Count(gli_codi) As Count FROM sgi_grup_line_inve " . 
+     " WHERE gli_grup_codi=" . $d['Codigo'] . " AND  gli_fech_term is null";
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+    if ($Accion=="SELECTCOUNTGRUPOSEMILLA")
+    {
+     $SQL="SELECT Count(sgr_codi) As Count FROM sgi_grup_semi WHERE " . 
+     " sgr_grup_codi=" .  $d['Codigo'] . " AND  sgr_fech_term is null";
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    if ($Accion=="SELECTCOUNTGRUPOPROYECTO")
+    {
+     $SQL="SELECT Count(id_proy) As Count FROM sgi_grup_proy WHERE " .
+     " id_grup=" . $d['Codigo'] . " AND fech_term is null";
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    if ($Accion=="SELECTCOUNTPROGRUPO")
+    {
+     $SQL="SELECT Count(pgr_plnt_codi) As Count FROM sgi_plnt_grup WHERE " . 
+     " pgr_grup_codi=" . $d['Codigo'] . " AND pgr_fech_term is null";
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    if ($Accion=="SELECT1")
+    {
+     $SQL="SELECT IG.igr_codi,G.gru_nomb AS Grupo,G.gru_codi, G.gru_colc_codi,G.gru_cate_colc, I.inv_codi,G.gru_aval_inst," .
+     " G.gru_fech_ini AS Fecha,CONCAT(I.inv_nomb,'',I.inv_apel) As Investigador,G.gru_area_codi As selArea,G.gru_cent_codi As selCentro " .
+     " FROM sgi_inve_grup AS IG  INNER JOIN sgi_grup AS G ON G.gru_codi = IG.igr_grup_codi " .
+     " INNER JOIN sgi_inve As I ON I.inv_codi = IG.igr_inve_iden WHERE G.gru_codi =" . $d['IdGrupo'];
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
     echo json_encode($resultArray);                                                        
     mysqli_close($conexion);
-   }
+   
 
 ?>
