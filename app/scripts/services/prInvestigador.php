@@ -24,10 +24,25 @@
      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
            $resultArray[] = $tuple;         
         }               
-    }
-    mysqli_close($conexion);
-    echo json_encode($resultArray);                                                        
+    }                                                        
    }
+
+   if ($Accion=="SELECTLIST")
+   {
+    $SQL="SELECT inv_codi, CONCAT(inv_apel,' ',inv_nomb) AS Nombre FROM sgi_inve";
+
+    $resultArray = array(); 
+  	$resultado = mysqli_query($conexion,$SQL);
+    if (mysqli_num_rows($resultado)==0 )                        
+        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    else
+    {
+     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+           $resultArray[] = $tuple;         
+        }               
+    }                                                  
+   }
+
 
    if ($Accion=="SELECTID")
    {
@@ -49,7 +64,29 @@
            $resultArray[] = $tuple;         
         }               
     }
+   }
     
+   if ($Accion=="SELECTGRUPO")
+   {
+    $SQL="select I.inv_nomb As Nombre,I.inv_apel As Apellido,C.CEN_CODI AS IdCentro, C.cen_nomb As Centro,Z.zon_nomb As " .
+    " ZONA,E.esc_nomb AS Escuela,P.pac_nomb AS Programa " .
+    " from sgi_inve AS I INNER JOIN sgi_cent AS C ON I.inv_cent_codi = C.cen_codi INNER JOIN sgi_zona AS Z ON " .
+    " Z.zon_codi=C.cen_zona_codi INNER JOIN sgi_prog_acad As P ON P.pac_codi = I.inv_prog_acad_codi INNER JOIN " .
+    " sgi_escu AS E ON E.esc_codi = P.pac_escu_codi WHERE I.inv_codi=" . $d['INV_CODI'];
+
+    $resultArray = array(); 
+  	$resultado = mysqli_query($conexion,$SQL);
+    if (mysqli_num_rows($resultado)==0 )                        
+        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    else
+    {
+     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+           $resultArray[] = $tuple;         
+        }               
+    }
+   }
+
+
     if ($Accion=="INSERT")
     {
 
@@ -83,5 +120,5 @@
 
     echo json_encode($resultArray);                                                        
     mysqli_close($conexion);
-   }
+   
 ?>

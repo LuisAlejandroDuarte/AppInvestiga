@@ -144,42 +144,53 @@ var idInve="";
              $scope.investigador2 = investigador.data;
             $scope.investigador2.$promise.then(function(investigador){
 
-                $scope.tipoVinculacion = TareasResource.execute.query({Accion: 'S',
-                  SQL: 'SELECT tiv_codi,tiv_desc FROM sgi_tipo_vinc'}); 
-                  $scope.tipoVinculacion.$promise.then(function(result){
+              parametros = {
+                Accion:'SELECT'
+              }
 
-                      $scope.tipoVinculacion = result;
+                $scope.tipoVinculacion = TareasResource.prTipoVinculacion(parametros); 
+                  $scope.tipoVinculacion.then(function(result){
 
-                       $scope.listLineasInvestigacion = TareasResource.execute.query({Accion: 'S',
-                       SQL: 'SELECT lin_codi,lin_desc FROM sgi_line_inve'}); 
-                       $scope.listLineasInvestigacion.$promise.then(function(result){
+                      $scope.tipoVinculacion = result.data;
 
-                          $scope.listLineasInvestigacion =result;
+                      parametros = {
+                        Accion='SELECTLINEASINVESTIGACION'
+                      }
 
-                           $scope.listInvestigador = TareasResource.execute.query({Accion: 'S',
-                           SQL: 'SELECT inv_codi, CONCAT(inv_apel," ",inv_nomb) AS Nombre FROM sgi_inve'}); 
+                       $scope.listLineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
+                       $scope.listLineasInvestigacion.then(function(result){
 
-                            $scope.listInvestigador.$promise.then(function(result){
+                          $scope.listLineasInvestigacion =result.data;
 
-                                  $scope.listInvestigador=result;
-                                   $scope.listSemillero = TareasResource.execute.query({Accion: 'S',
-                                   SQL: 'SELECT sem_codi,sem_nomb AS Nombre FROM sgi_semi'}); 
+                          parametros = {
+                            Accion='SELECTLIST'
+                          }
 
-                                    $scope.listSemillero.$promise.then(function(result){
-                                    $scope.listSemillero=result;
+                           $scope.listInvestigador = TareasResource.prInvestigador(parametros); 
 
-                                     var LineasInvestigacion = TareasResource.execute.query({Accion: 'S',
-                                     SQL: "SELECT GL.gli_codi As Id,LI.lin_codi As Id2, LI.lin_desc As Nombre,GL.gli_fech_inic AS FechaInicia, " +
-                                     " GL.gli_fech_term As FechaTermina, 1 AS tipo FROM " + 
-                                     " sgi_grup As G INNER JOIN sgi_grup_line_inve AS GL ON " +
-                                     " G.gru_codi = GL.gli_grup_codi INNER JOIN sgi_line_inve AS LI ON " +
-                                     " LI.lin_codi = GL.gli_line_inve_codi " + 
-                                     " WHERE G.gru_codi = " +  IdGrupo + ""}); 
+                            $scope.listInvestigador.then(function(result){
+
+                                  $scope.listInvestigador=result.data;
+
+                                parametros = {
+                                   Accion='SELECT'
+                                   }
+                                   $scope.listSemillero = TareasResource.prSemillero(parametros); 
+
+                                    $scope.listSemillero.then(function(result){
+                                    $scope.listSemillero=result.data;
+
+                                    parametros = {
+                                      Accion='SELECTLINEASBYGRUPO',
+                                      IdGrupo:IdGrupo
+                                    } 
+
+                                     var LineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
 
                                         var  tieneDatos=false;
                                           $scope.LineasInvestigacion  =[];      
-                                            LineasInvestigacion.$promise.then(function(result){
-                                                angular.forEach(result, function(value, key){
+                                            LineasInvestigacion.then(function(result){
+                                                angular.forEach(result.data, function(value, key){
                                                   if (value.Id==undefined || value.Id=="")   
                                                   {                             
                                                     $scope.LineasInvestigacion  =[];                                
@@ -192,7 +203,7 @@ var idInve="";
                                                 });
                                                 $('#myModal').hide();  
                                                 if (tieneDatos==true)
-                                                      $scope.LineasInvestigacion = result;           
+                                                      $scope.LineasInvestigacion = result.data;           
                                             });
                                   });    
                             });
@@ -204,30 +215,28 @@ var idInve="";
            else
            {
            
-
-           $scope.datos = TareasResource.execute.query({Accion: 'S',
-           SQL: ' select I.inv_nomb As Nombre,I.inv_apel As Apellido,C.CEN_CODI AS IdCentro, C.cen_nomb As Centro,Z.zon_nomb As ' + 
-           ' ZONA,E.esc_nomb AS Escuela,P.pac_nomb AS Programa ' +
-           ' from sgi_inve AS I INNER JOIN sgi_cent AS C ON I.inv_cent_codi = C.cen_codi INNER JOIN sgi_zona AS Z ON ' +
-           ' Z.zon_codi=C.cen_zona_codi INNER JOIN sgi_prog_acad As P ON P.pac_codi = I.inv_prog_acad_codi INNER JOIN ' +
-           ' sgi_escu AS E ON E.esc_codi = P.pac_escu_codi WHERE I.inv_codi=' +  user.INV_CODI }); 
+            parametros= {
+              Accion:'SELECTGRUPO',
+              INV_CODI: user.INV_CODI
+            }
+           $scope.datos = TareasResource.prInvestigador(parametros); 
 
 
-               $scope.datos.$promise.then(function(result){
+               $scope.datos.then(function(result){
 
-                    if (result[0].Nombre=="" || result[0].Nombre==undefined)
+                    if (result.data[0].Nombre=="" || result.data[0].Nombre==undefined)
                     {
                       $window.alert("Debe completar la Información del Investigador");
                       return;
                     }
 
-                      $scope.NombreInvestigador = result[0].Nombre;
-                      $scope.ApellidoInvestigador = result[0].Apellido;
-                      $scope.CentroInvestigador = result[0].Centro;
-                      $scope.ZonaInvestigador = result[0].ZONA;  
-                      $scope.ProgramaInvestigador = result[0].Programa;  
-                      $scope.EscuelaInvestigador = result[0].Escuela;  
-
+                      $scope.NombreInvestigador = result.data[0].Nombre;
+                      $scope.ApellidoInvestigador = result.data[0].Apellido;
+                      $scope.CentroInvestigador = result.data[0].Centro;
+                      $scope.ZonaInvestigador = result.data[0].ZONA;  
+                      $scope.ProgramaInvestigador = result.data[0].Programa;  
+                      $scope.EscuelaInvestigador = result.data[0].Escuela;  
+                        
                        $scope.area =TareasResource.execute.query({Accion:'S',SQL:'SELECT ARE_CODI,ARE_NOMB from sgi_area'});
                        $scope.area.$promise.then(function(result){  
                        $scope.listArea =result;

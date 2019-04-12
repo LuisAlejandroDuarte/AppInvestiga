@@ -50,10 +50,10 @@
         }               
     }
   
-    echo json_encode($resultArray);                                                        
-    mysqli_close($conexion);
+   
    }
 
-
+   echo json_encode($resultArray);                                                        
+   mysqli_close($conexion);
    
 ?>
