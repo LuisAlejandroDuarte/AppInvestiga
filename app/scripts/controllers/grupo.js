@@ -60,7 +60,7 @@
                              .then(function(result2){
                               if (result2.data[0].Count>0)
                               {
-                               $window.alert("Debe primero eliminar los producción  relacionados al grupo");
+                               $window.alert("Debe primero eliminar los productos  relacionados al grupo");
                                $('#myModal').data('id', 0).modal('hide'); 
                                return;
                                }

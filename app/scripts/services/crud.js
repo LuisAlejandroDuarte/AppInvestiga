@@ -87,6 +87,11 @@ angular.module('listaTareasApp')
 			return $http.post('scripts/services/prCentro.php', datos);  
 		},
 
+		prArea: function(datos) {
+			return $http.post('scripts/services/prArea.php', datos);  
+		},
+
+
 		prProgramaAcademico: function(datos) {
 			return $http.post('scripts/services/prProgramaAcademico.php', datos);  
 		},

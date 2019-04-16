@@ -28,8 +28,26 @@
            $resultArray[] = $tuple;         
         }               
     }
-    
-    echo json_encode($resultArray);                                                        
-    mysqli_close($conexion);
    }
+    
+    if ($Accion=="SELECTPRODUCTOPROYECTO")
+    {
+     $SQL="SELECT P.nombre,P.Id FROM sgi_prod_proy As PP INNER JOIN sgi_prod AS P ON P.Id = PP.id_prod WHERE " .
+     " PP.id_proy =" . $d['PRO_CODI'];
+ 
+     $resultArray = array(); 
+      $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+   }
+   mysqli_close($conexion);
+    echo json_encode($resultArray);                                                        
+    
+   
 ?>

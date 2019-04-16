@@ -66,6 +66,23 @@
     }
    }
     
+   if ($Accion=="SELECTNOMBRESINVE")
+   {
+    $SQL="SELECT inv_codi AS Id, CONCAT(inv_apel,' ',inv_nomb) AS Nombre FROM sgi_inve " .
+    " WHERE sgi_inve.INV_CODI!=" . $d['INV_CODI'] . " AND (sgi_inve.INV_CODI_USUA!=0 or sgi_inve.INV_CODI_USUA!=null)";
+
+    $resultArray = array(); 
+  	$resultado = mysqli_query($conexion,$SQL);
+    if (mysqli_num_rows($resultado)==0 )                        
+        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    else
+    {
+     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+           $resultArray[] = $tuple;         
+        }               
+    }
+   }
+
    if ($Accion=="SELECTGRUPO")
    {
     $SQL="select I.inv_nomb As Nombre,I.inv_apel As Apellido,C.CEN_CODI AS IdCentro, C.cen_nomb As Centro,Z.zon_nomb As " .

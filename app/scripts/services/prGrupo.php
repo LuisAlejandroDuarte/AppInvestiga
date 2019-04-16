@@ -152,6 +152,80 @@
      }
     }
 
+    if ($Accion=="SELECTGRUPOINVESTIGADOR")
+    {
+     $SQL="SELECT P.pro_nomb,P.pro_codi FROM sgi_proy As P INNER JOIN sgi_proy_inve AS PI ON P.pro_codi = PI.id_proy WHERE " .
+     " PI.id_inve IN (" . $d['IdInve'] . ")";
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    if ($Accion=="SELECTPLNTGRUPO")
+    {
+     $SQL="SELECT pgr_plnt_codi As Id, pgr_path As Path,pgr_fech_inic As FechaInicio,pgr_fech_term AS FechaTermina,pgr_grup_codi As IdGrupo, " .
+     " pgr_plnt_codi,pgr_nombre As Nombre FROM sgi_plnt_grup WHERE pgr_grup_codi=" . $d['IdGrupo'];
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+    
+    if ($Accion=="SELECTGRUPOSEMILLA")
+    {
+     $SQL="SELECT GS.sgr_codi AS Id, S.sem_nomb AS Nombre,GS.sgr_fech_inic As FechaInicia, " .
+     " GS.sgr_fech_term As FechaTermina, S.sem_codi AS Id2,3 As Tipo FROM " .
+     " sgi_grup As G INNER JOIN sgi_grup_semi AS GS ON " .
+     " G.gru_codi = GS.sgr_grup_codi INNER JOIN sgi_semi AS S ON " .
+     " S.sem_codi = GS.sgr_semi_codi " .
+     " WHERE GS.sgr_grup_codi = " . $d['idGrupo'];
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+      
+    if ($Accion=="DELETEGLIGRUPOCODI")
+    {
+     $SQL="DELETE FROM sgi_grup_line_inve WHERE gli_grup_codi=" . $d['idGrupo'];
+ 
+     $resultArray = array(); 
+     $resultado = mysqli_query($conexion,$SQL);
+     if (mysqli_num_rows($resultado)==0 )                        
+         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+     else
+     {
+      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+            $resultArray[] = $tuple;         
+         }               
+     }
+    }
+
+
     echo json_encode($resultArray);                                                        
     mysqli_close($conexion);
    
