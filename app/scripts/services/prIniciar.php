@@ -7,7 +7,7 @@
   $Usuario= $d['Usuario'];
   $Clave= $d['Clave'];
 
-  $conexion= mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
+  $conexion= mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME,3306);
   if (mysqli_connect_errno()) {
      echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
