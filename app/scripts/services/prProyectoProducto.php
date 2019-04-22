@@ -10,6 +10,8 @@
      echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
+
+  
   if ($Accion=="SelectProyectoProducto")
    {
     $SQL="select tp.Descripcion AS NombreTipoProducto, pr.id AS IdProducto,pr.id_tipo AS IdTipoProducto,pr.Nombre As NombreProducto, " . 
@@ -46,6 +48,48 @@
          }               
      }
    }
+
+   
+
+
+   if ($Accion=="DELETEPROYECTO")
+   {
+    $SQL="DELETE FROM sgi_prod_proy where id_proy=" . $d['Codigo'];
+
+    $resultArray = array(); 
+    $resultado = mysqli_query($conexion,$SQL);
+    
+  }
+  
+
+
+  if ($Accion=="DELETEPROYECTO2")
+   {
+    $SQL="DELETE FROM sgi_prod_inve where id_proy="  . $d['Codigo'];
+
+    $resultArray = array(); 
+    $resultado = mysqli_query($conexion,$SQL);
+    
+  }
+
+  if ($Accion=="DELETEPROYECTO3")
+   {
+    $SQL="DELETE FROM sgi_proy_inve where id_proy=" . $d['Codigo'];
+
+    $resultArray = array(); 
+    $resultado = mysqli_query($conexion,$SQL);
+    
+  }
+
+  if ($Accion=="DELETEPROYECTO4")
+   {
+    $SQL="DELETE FROM sgi_proy where pro_codi=" . $d['Codigo'];
+
+    $resultArray = array(); 
+    $resultado = mysqli_query($conexion,$SQL);
+    
+  }
+   
    mysqli_close($conexion);
     echo json_encode($resultArray);                                                        
     

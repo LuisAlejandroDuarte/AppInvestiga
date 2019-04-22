@@ -24,8 +24,28 @@
            $resultArray[] = $tuple;         
         }               
     }
-   
+   }
+
+   if ($Accion=="SELECT2")
+   {
+    $SQL="SELECT ESCUELA.ESC_NOMB FROM sgi_prog_acad AS PROGRAMA INNER JOIN " .
+    " sgi_escu AS ESCUELA ON  PROGRAMA.PAC_ESCU_CODI = ESCUELA.ESC_CODI WHERE " .
+    " PROGRAMA.PAC_CODI =" . $d['idPrograma']; 
+
+    $resultArray = array(); 
+  	$resultado = mysqli_query($conexion,$SQL);
+    if (mysqli_num_rows($resultado)==0 )                        
+        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    else
+    {
+     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+           $resultArray[] = $tuple;         
+        }               
+    }
+   }
+
+
     echo json_encode($resultArray);                                                        
     mysqli_close($conexion);
-   }
+   
 ?>

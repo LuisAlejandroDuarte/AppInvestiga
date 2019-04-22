@@ -4,6 +4,7 @@
   $d= json_decode(file_get_contents("php://input"),TRUE); 
 
   $Accion = $d['Accion'];  
+  $resultArray = array(); 
 
   $conexion= mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
   if (mysqli_connect_errno()) {
@@ -25,8 +26,7 @@
            $resultArray[] = $tuple;         
         }               
     }
-    mysqli_close($conexion);
-    echo json_encode($resultArray);                                                        
+                                                      
    }
 
    if ($Accion=="SELECTGRUPO")
@@ -136,7 +136,7 @@
     if ($Accion=="SELECT1")
     {
      $SQL="SELECT IG.igr_codi,G.gru_nomb AS Grupo,G.gru_codi, G.gru_colc_codi,G.gru_cate_colc, I.inv_codi,G.gru_aval_inst," .
-     " G.gru_fech_ini AS Fecha,CONCAT(I.inv_nomb,'',I.inv_apel) As Investigador,G.gru_area_codi As selArea,G.gru_cent_codi As selCentro " .
+     " G.gru_fech_ini AS Fecha,CONCAT(I.inv_nomb,' ',I.inv_apel) As Nombre,G.gru_area_codi As selArea,G.gru_cent_codi As selCentro " .
      " FROM sgi_inve_grup AS IG  INNER JOIN sgi_grup AS G ON G.gru_codi = IG.igr_grup_codi " .
      " INNER JOIN sgi_inve As I ON I.inv_codi = IG.igr_inve_iden WHERE G.gru_codi =" . $d['IdGrupo'];
  
@@ -215,14 +215,8 @@
  
      $resultArray = array(); 
      $resultado = mysqli_query($conexion,$SQL);
-     if (mysqli_num_rows($resultado)==0 )                        
-         $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
-     else
-     {
-      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
-            $resultArray[] = $tuple;         
-         }               
-     }
+        
+
     }
 
 

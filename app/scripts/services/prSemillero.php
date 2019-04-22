@@ -23,9 +23,7 @@
      while ($tuple= mysqli_fetch_assoc($resultado)) {                        
            $resultArray[] = $tuple;         
         }               
-    }
-    mysqli_close($conexion);
-    echo json_encode($resultArray);                                                        
+    }   
    }
 
 

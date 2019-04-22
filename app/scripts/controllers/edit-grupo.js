@@ -20,22 +20,15 @@ angular.module('listaTareasApp')
       width: 120,height: 20,formatString:'yyyy-MM-dd',culture: 'es-CO'
     }
 
-       $scope.dateInputSettings =
-            {
-                width: 120,
-                height: 20,
-                formatString:'yyyy-MM-dd',
-                culture: 'es-CO',                
-            }
+    $scope.dateInputSettings =
+      {
+      width: 120,
+      height: 20,
+      formatString:'yyyy-MM-dd',
+      culture: 'es-CO',                
+    }
             
 
-       // $scope.dateSettingsInvestiga =
-
-       // {
-       //  width: 120,
-       //  height: 20,
-       //                                                                                                                             formatString:'yyyy-MM-dd',
-       //                                                                                                                             culture: 'es-CO',min:investiga.FechaInicia}
 
       $scope.jqxPanelSettingsProyecto=
       {
@@ -123,7 +116,22 @@ var idInve="";
               gru_aval_inst:"0"  
             }]          
         }
-      
+
+        var parametros = {
+          Accion:'SELECT'
+        }
+        
+          $scope.area =TareasResource.prArea(parametros);
+          $scope.area.then(function(result){  
+          $scope.listArea =result.data;
+
+          $scope.centro =TareasResource.prCentro(parametros);
+          $scope.centro.then(function(result){  
+            $scope.listCentro =result.data;
+            if (IdGrupo!=0)
+            {
+
+
               var parametros = {
                 Accion:"SELECT1",
                 IdGrupo:IdGrupo
@@ -135,230 +143,265 @@ var idInve="";
               if (investigador.data[0]!=null)
               {
                 $('#myModal').show();  
-              $scope.datos2= investigador.data;
+                $scope.datos2 =[];
+              $scope.datos2[0]= investigador.data[0];
               $scope.datos2[0].gru_aval_inst =investigador.data[0].gru_aval_inst;
               $scope.datos2[0].Fecha= new Date(moment(investigador.data[0].Fecha));
+              var lista = [];
+              investigador.data.forEach(function(valor, indice, array){
+                if (valor.inv_codi!=user.INV_CODI)
+                  lista.push(valor);
+              });  
 
-               var id_inve=0;
-
-             $scope.investigador2 = investigador.data;        
-
-              parametros = {
-                Accion:'SELECT'
+              $scope.Investigadores =lista;
+              parametros= {
+                Accion:'SELECTGRUPO',
+                INV_CODI: user.INV_CODI
               }
+            $scope.datos = TareasResource.prInvestigador(parametros); 
 
-                $scope.tipoVinculacion = TareasResource.prTipoVinculacion(parametros); 
-                  $scope.tipoVinculacion.then(function(result){
 
-                      $scope.tipoVinculacion = result.data;
+                $scope.datos.then(function(result){
 
-                      parametros = {
-                        Accion:'SELECTLINEASINVESTIGACION'
+                      if (result.data[0]==null )
+                      {
+                        $window.alert("Debe completar la Información del Investigador");
+                        $('#myModal').hide();  
+                        $location.path('/grupo');
+                        return;
                       }
 
-                       $scope.listLineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
-                       $scope.listLineasInvestigacion.then(function(result){
+                        $scope.NombreInvestigador = result.data[0].Nombre;
+                        $scope.ApellidoInvestigador = result.data[0].Apellido;
+                        $scope.CentroInvestigador = result.data[0].Centro;
+                        $scope.ZonaInvestigador = result.data[0].ZONA;  
+                        $scope.ProgramaInvestigador = result.data[0].Programa;  
+                        $scope.EscuelaInvestigador = result.data[0].Escuela;  
 
-                          $scope.listLineasInvestigacion =result.data;
+                        var id_inve=0;
 
-                          parametros = {
-                            Accion:'SELECTLIST'
-                          }
+                        $scope.investigador2 = investigador.data;        
 
-                           $scope.listInvestigador = TareasResource.prInvestigador(parametros); 
+                        parametros = {
+                          Accion:'SELECT'
+                        }
 
-                            $scope.listInvestigador.then(function(result){
+                          $scope.tipoVinculacion = TareasResource.prTipoVinculacion(parametros); 
+                            $scope.tipoVinculacion.then(function(result){
 
-                                  $scope.listInvestigador=result.data;
+                                $scope.tipoVinculacion = result.data;
 
                                 parametros = {
-                                   Accion:'SELECT'
-                                   }
-                                   $scope.listSemillero = TareasResource.prSemillero(parametros); 
+                                  Accion:'SELECTLINEASINVESTIGACION'
+                                }
 
-                                    $scope.listSemillero.then(function(result){
-                                    $scope.listSemillero=result.data;
+                                  $scope.listLineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
+                                  $scope.listLineasInvestigacion.then(function(result){
+
+                                    $scope.listLineasInvestigacion =result.data;
 
                                     parametros = {
-                                      Accion:'SELECTLINEASBYGRUPO',
-                                      IdGrupo:IdGrupo
-                                    } 
-
-                                     var LineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
-
-                                        var  tieneDatos=false;
-                                          $scope.LineasInvestigacion  =[];      
-                                            LineasInvestigacion.then(function(result){
-                                                angular.forEach(result.data, function(value, key){
-                                                  if (value.Id==undefined || value.Id=="")   
-                                                  {                             
-                                                    $scope.LineasInvestigacion  =[];                                
-                                                  }
-                                                  else
-                                                  {
-                                                    tieneDatos =true;
-                                                  }
-                                                              
-                                                });
-                                                $('#myModal').hide();  
-                                                if (tieneDatos==true)
-                                                      $scope.LineasInvestigacion = result.data;           
-                                            });
-                                  });    
-                            });
-                       });
-                  });
-              
-
-           }
-           else
-           {
-           
-            parametros= {
-              Accion:'SELECTGRUPO',
-              INV_CODI: user.INV_CODI
-            }
-           $scope.datos = TareasResource.prInvestigador(parametros); 
-
-
-               $scope.datos.then(function(result){
-
-                    if (result.data[0].Nombre=="" || result.data[0].Nombre==undefined)
-                    {
-                      $window.alert("Debe completar la Información del Investigador");
-                      return;
-                    }
-
-                      $scope.NombreInvestigador = result.data[0].Nombre;
-                      $scope.ApellidoInvestigador = result.data[0].Apellido;
-                      $scope.CentroInvestigador = result.data[0].Centro;
-                      $scope.ZonaInvestigador = result.data[0].ZONA;  
-                      $scope.ProgramaInvestigador = result.data[0].Programa;  
-                      $scope.EscuelaInvestigador = result.data[0].Escuela;  
-                      
-                      parametros = {
-                        Accion:'SELECT'
-                      }
-                      
-                       $scope.area =TareasResource.prArea(parametros);
-                       $scope.area.then(function(result){  
-                       $scope.listArea =result.data;
-
-                       $scope.centro =TareasResource.prCentro(parametros);
-                        $scope.centro.then(function(result){  
-                          $scope.listCentro =result.data;
-                          if (investigador.data[0]!=null)
-                              $scope.datos2[0].selArea = investigador.data[0].selArea;     
-                              parametros = {
-                                Accion:'SELECTGRUPOINVESTIGADOR',
-                                IdInve:user.INV_CODI
-                              }
-
-                                  var  Investigadores = TareasResource.prGrupo(parametros);   
-                                    var tieneDatos1=false;
-                             
-                               $scope.Investigadores  =[];   
-                              Investigadores.then(function(result1){
-                                if (result1.data!=null)
-                                  angular.forEach(result1.data, function(value, key){
-                                    if (value.Nombre==undefined ||value.Nombre=="")                                
-                                    {
-                                      $scope.Investigadores  =[];                                
+                                      Accion:'SELECTLIST'
                                     }
-                                    else
-                                    {
-                                      idInve =idInve + value.Id2  + ',';
-                                      tieneDatos1 =true;
-                                    }
-                                                
-                                  });
-                                  if (tieneDatos1==true)
-                                  {
-                                       $scope.Investigadores = result1.data;  
-                                       idInve = idInve.substring(0,idInve.length-1); 
-                                       if (idInve!="")
-                                       {
-                                        parametros = {
-                                          Accion:"SELECTPROYECTOINVESTIGADOR",
-                                          IdInve:idInve
-                                        }
 
-                                       $scope.listProyectos =  TareasResource.prProyecto(parametros);
+                                      $scope.listInvestigador = TareasResource.prInvestigador(parametros); 
 
-                                        $scope.listProyectos.then(function(result){
+                                      $scope.listInvestigador.then(function(result){
+
+                                            $scope.listInvestigador=result.data;
 
                                           parametros = {
-                                            Accion:'SELECTGRUPOPROYECTO',
-                                            IdGrupo:IdGrupo,
-                                            INV_CODI:user.INV_CODI
-                                          }
-                                         $scope.Proyectos =  TareasResource.prProyecto(parametros);
+                                              Accion:'SELECT'
+                                              }
+                                              $scope.listSemillero = TareasResource.prSemillero(parametros); 
 
+                                              $scope.listSemillero.then(function(result){
+                                              $scope.listSemillero=result.data;
 
-                                          $scope.Proyectos.then(function(result){
-                                            if (result.data[0].NombreProyecto !=undefined)                          
-                                              $scope.Proyectos =result.data;
-                                            else
-                                              $scope.Proyectos =[];    
 
                                               parametros = {
-                                                Accion:'SELECTPLNTGRUPO',
-                                                IdGrupo:IdGrupo
+                                                Accion:'SELECTGRUPOSEMILLA',
+                                                idGrupo: $route.current.params.idGrupo
                                               }
 
-                                             $scope.planTrabajo = TareasResource.prGrupo(parametros); 
+                                                var Semilleros = TareasResource.prGrupo(parametros);
+                                                var tieneDatos2=false;
+                                                $scope.Semilleros  =[]; 
+                                              Semilleros.then(function(result2){
+                                                  angular.forEach(result2.data, function(value, key){
+                                                    if (value.Nombre==undefined || value.Nombre=="")                                
+                                                    {
+                                                      $scope.Semilleros  =[];                                
+                                                    }
+                                                    else
+                                                    {
+                                                      tieneDatos2 =true;
+                                                    }
+                                                                
+                                                  });
+                                                  if (tieneDatos2==true)
+                                                        $scope.Semilleros = result2.data;    
+                                                  
+                                                        parametros = {
+                                                          Accion:'SELECTLINEASBYGRUPO',
+                                                          IdGrupo:IdGrupo
+                                                        } 
+          
+                                                          var LineasInvestigacion = TareasResource.prLineaInvestigacion(parametros); 
+          
+                                                            var  tieneDatos=false;
+                                                              $scope.LineasInvestigacion  =[];      
+                                                                LineasInvestigacion.then(function(result){
+                                                                
+                                                                    angular.forEach(result.data, function(value, key){
+                                                                      if (value.Id==undefined || value.Id=="")   
+                                                                      {                             
+                                                                        $scope.LineasInvestigacion  =[];                                
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                        tieneDatos =true;
+                                                                      }
+                                                                                  
+                                                                    });
+                                                                    $('#myModal').hide();  
+                                                                    if (tieneDatos==true)
+                                                                          $scope.LineasInvestigacion = result.data;           
+                                                                });
 
-                                            $scope.planTrabajo.then(function(plan){
+                                              }); 
 
-                                              if (plan.data[0].pgr_plnt_codi!=undefined)                            
-                                                 $scope.planTrabajo=plan.data;                              
+
+                                             
+                                            });    
+                                      });
+                                  });
+                            });
+
+                    });
+                                                                                    
+                  }
+              });
+
+            }
+            else
+            {
+
+              parametros= {
+                Accion:'SELECTGRUPO',
+                INV_CODI: user.INV_CODI
+              }
+              $scope.datos = TareasResource.prInvestigador(parametros); 
+
+
+                  $scope.datos.then(function(result){
+
+                      if (result.data[0]==null )
+                      {
+                        $window.alert("Debe completar la Información del Investigador");
+                        $('#myModal').hide();  
+                        $location.path('/grupo');
+                        return;
+                      }
+
+                        $scope.NombreInvestigador = result.data[0].Nombre;
+                        $scope.ApellidoInvestigador = result.data[0].Apellido;
+                        $scope.CentroInvestigador = result.data[0].Centro;
+                        $scope.ZonaInvestigador = result.data[0].ZONA;  
+                        $scope.ProgramaInvestigador = result.data[0].Programa;  
+                        $scope.EscuelaInvestigador = result.data[0].Escuela;  
+                        
+                    
+
+                        
+                            if (investigador.data[0]!=null)
+                                $scope.datos2[0].selArea = investigador.data[0].selArea;     
+                                parametros = {
+                                  Accion:'SELECTGRUPOINVESTIGADOR',
+                                  IdInve:user.INV_CODI
+                                }
+
+                                    var  Investigadores = TareasResource.prGrupo(parametros);   
+                                      var tieneDatos1=false;
+                                
+                                  $scope.Investigadores  =[];   
+                                Investigadores.then(function(result1){
+                                  if (result1.data!=null)
+                                    angular.forEach(result1.data, function(value, key){
+                                      if (value.Nombre==undefined ||value.Nombre=="")                                
+                                      {
+                                        $scope.Investigadores  =[];                                
+                                      }
+                                      else
+                                      {
+                                        idInve =idInve + value.Id2  + ',';
+                                        tieneDatos1 =true;
+                                      }
+                                                  
+                                    });
+                                    if (tieneDatos1==true)
+                                    {
+                                          $scope.Investigadores = result1.data;  
+                                          idInve = idInve.substring(0,idInve.length-1); 
+                                          if (idInve!="")
+                                          {
+                                          parametros = {
+                                            Accion:"SELECTPROYECTOINVESTIGADOR",
+                                            IdInve:idInve
+                                          }
+
+                                          $scope.listProyectos =  TareasResource.prProyecto(parametros);
+
+                                          $scope.listProyectos.then(function(result){
+
+                                            parametros = {
+                                              Accion:'SELECTGRUPOPROYECTO',
+                                              IdGrupo:IdGrupo,
+                                              INV_CODI:user.INV_CODI
+                                            }
+                                            $scope.Proyectos =  TareasResource.prProyecto(parametros);
+
+
+                                            $scope.Proyectos.then(function(result){
+                                              if (result.data[0].NombreProyecto !=undefined)                          
+                                                $scope.Proyectos =result.data;
                                               else
-                                                $scope.planTrabajo=[];
+                                                $scope.Proyectos =[];    
 
                                                 parametros = {
-                                                  Accion:'SELECTGRUPOSEMILLA',
-                                                  IdGrupo: $route.current.params.idGrupo
+                                                  Accion:'SELECTPLNTGRUPO',
+                                                  IdGrupo:IdGrupo
                                                 }
 
-                                                 var Semilleros = TareasResource.prGrupo(parametros);
-                                                 var tieneDatos2=false;
-                                                 $scope.Semilleros  =[]; 
-                                                Semilleros.then(function(result2){
-                                                    angular.forEach(result2.data, function(value, key){
-                                                      if (value.Nombre==undefined || value.Nombre=="")                                
-                                                      {
-                                                        $scope.Semilleros  =[];                                
-                                                      }
-                                                      else
-                                                      {
-                                                        tieneDatos2 =true;
-                                                      }
-                                                                  
-                                                    });
-                                                    if (tieneDatos2==true)
-                                                          $scope.Semilleros = result2.data;    
-                                                           $('#myModal').hide();         
-                                                }); 
+                                                $scope.planTrabajo = TareasResource.prGrupo(parametros); 
 
-                                              
+                                              $scope.planTrabajo.then(function(plan){
+
+                                                if (plan.data[0].pgr_plnt_codi!=undefined)                            
+                                                    $scope.planTrabajo=plan.data;                              
+                                                else
+                                                  $scope.planTrabajo=[];
+
+                                                 
+                                                
+                                              });
                                             });
                                           });
-                                        });
-                                      }
+                                        }
 
 
-                                                    
-                                  }
-                              }); 
+                                                      
+                                    }
+                                }); 
+                            
 
+                            });
+                          }
+                });
+     });
+        
 
-                          });
-                });  
-
-
-              });
-           }
-      });
+        
           
                
 
@@ -607,6 +650,7 @@ $scope.OnClicDescargarPlan = function(a,b)
           {
 
             $scope.jqxWindowSettings.apply('close');
+            if ($scope.LineasInvestigacion==undefined) $scope.LineasInvestigacion=[];
             $scope.LineasInvestigacion.splice(0,0,{Nombre:$scope.selTipoGrupo.Nombre,FechaInicia:$scope.FechaInicia,FechaTermina:null,Id:$scope.idMain.Id,Id2:$scope.selTipoGrupo.Id});                                         
           }
         }
@@ -844,7 +888,13 @@ $scope.OnClicDescargarPlan = function(a,b)
 
           executeSql.then(function (result){
 
-             $scope.listTipoGrupo =result.data;
+              var lista = [];
+
+              angular.forEach(result.data,function(item,value){
+                lista.push({Nombre:item.lin_desc,Id:item.lin_codi});
+              });
+
+             $scope.listTipoGrupo =lista;
 
               $('#cmdLinea').popover('destroy');
               $scope.titleEditar = "Líneas de Investigación";
@@ -931,7 +981,15 @@ $scope.OnClicDescargarPlan = function(a,b)
 
         var tipoGrupo= TareasResource.prSemillero(parametros); 
         tipoGrupo.then(function(result){
-          $scope.listTipoGrupo =result.data;
+
+          var lista = [];
+
+          angular.forEach(result.data,function(item,value){
+            lista.push({Nombre:item.sem_nomb,Id:item.sem_codi});
+          });
+
+
+          $scope.listTipoGrupo =lista;
           $('#cmdLinea').popover('destroy');
           $scope.titleEditar = "Semilleros del Grupo";
           $scope.tipoGrupo = "Seleccione Semillero";
@@ -1035,11 +1093,11 @@ $scope.OnClicEliminarSemilleroGrupo = function(semillero)
     }
 
     executeSql = TareasResource.prGrupo(parametros);
-       executeSql.$promise.then(function (result){
+       executeSql.then(function (result){
 
 
 
-        if (result.data[0].estado=="ok")
+        if (result.data.length==0)
         {
 
            

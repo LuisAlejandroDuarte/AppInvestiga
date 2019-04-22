@@ -21,31 +21,31 @@ angular.module('listaTareasApp')
                             else
                             {
                                 var datos ={
-                                Accion:'D',
-                                SQL:'DELETE FROM sgi_prod_proy where id_proy=' + Codigo
+                                Accion:'DELETEPROYECTO',
+                                Codigo:Codigo
                             }
 
-                          var borrar =TareasResource.SQL(datos);
+                          var borrar =TareasResource.prProyectoProducto(datos);
                               borrar.then(function(res){
 
                           datos ={
-                                Accion:'D',
-                                SQL:'DELETE FROM sgi_prod_inve where id_proy=' + Codigo
+                                Accion:'DELETEPROYECTO2',
+                                Codigo:Codigo
                             }
 
-                         borrar =TareasResource.SQL(datos);
+                         borrar =TareasResource.prProyectoProducto (datos);
                             borrar.then(function(res){
                             datos ={
-                                Accion:'D',                               
-                                  SQL:'DELETE FROM sgi_proy_inve where id_proy=' + Codigo
+                                Accion:'DELETEPROYECTO3',                               
+                                Codigo:Codigo
                             }
 
-                            borrar =TareasResource.SQL(datos);
+                            borrar =TareasResource.proyectoProducto(datos);
                             borrar.then(function(res){
 
                                datos ={
-                                Accion:'D',
-                                 SQL:'DELETE FROM sgi_proy where pro_codi=' + Codigo
+                                Accion:'DELETEPROYECTO4',
+                                Codigo:Codigo
                             }
 
                             borrar =TareasResource.SQL(datos);
@@ -344,6 +344,7 @@ angular.module('listaTareasApp')
 
                   consulta.then(function(dat){
 
+                   $('#tableinvestigadoredit').bootstrapTable('load',[]);
                       if (dat.data[0]!=null)
                           $('#tableinvestigadoredit').bootstrapTable('load',dat.data);
 
@@ -1072,12 +1073,17 @@ angular.module('listaTareasApp')
 
 $scope.onchangedcentro = function(idCentro){
 
-     
-
-       $scope.Zona = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT Zona.ZON_NOMB FROM sgi_cent AS Centro INNER JOIN " +
-                         "sgi_zona AS Zona ON  Centro.CEN_ZONA_CODI =Zona.ZON_CODI WHERE " +
-                         "Centro.CEN_CODI =" + idCentro }); 
+     var parametros = {
+       Accion:'SELECTZONACENTRO',
+       idCentro:idCentro
+     }
+     $('#myModal').show(); 
+     var zona = TareasResource.prCentro(parametros);
+     zona.then(function(result){
+      $scope.Zona =result.data;
+      $('#myModal').hide(); 
+     })
+       
 
    };
 
@@ -1233,50 +1239,63 @@ $scope.onchangedcentro = function(idCentro){
       }      
    }
 
-    $scope.onChangedGrup = function(idGrupo){
-         $scope.grupolinea = [];
-      $scope.grupolinea = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT l.lin_codi,l.lin_desc FROM sgi_grup_line_inve AS g " + 
-                         " INNER JOIN sgi_line_inve AS l ON g.gli_line_inve_codi=l.lin_codi " +
-                         " WHERE g.gli_grup_codi=" + idGrupo.gru_codi }); 
+   $scope.onChangedGrup = function(idGrupo){
+    $scope.grupolinea = [];
+   var parametros = {
+     Accion:'SELECTLINEASBYGRUPO2',
+     gru_codi:idGrupo.gru_codi
+   }
+   $('#myModal').show(); 
+ var grupolinea =  TareasResource.prLineaInvestigacion(parametros);
+   grupolinea.then(function(result){
+     $scope.grupolinea  =result.data;
+     $('#myModal').hide(); 
+   });
 
-    };
+}
 
 $scope.onChangedGrupProducto = function(idGrupo,idLinea){
-  
-      $scope.grupolineaproducto = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT l.lin_codi,l.lin_desc FROM sgi_grup_line_inve AS g " + 
-                         " INNER JOIN sgi_line_inve AS l ON g.gli_line_inve_codi=l.lin_codi " +
-                         " WHERE g.gli_grup_codi=" + idGrupo }); 
+ 
+  var parametros = {
+    Accion:'SELECTLINEASBYGRUPO3',
+    iGrupo:idGrupo
+  }
+  $('#myModal').show(); 
+      $scope.grupolineaproducto = TareasResource.prLineaInvestigacion(parametros);
 
-     $scope.grupolineaproducto.$promise.then(function(result){
+
+     $scope.grupolineaproducto.then(function(result){
           $scope.proy.selLineaInvestigador=idLinea;
+          $('#myModal').hide(); 
     });
 
+};
 
 
+    // $scope.onChangedSemillero = function(idSemillero) {
 
-    };
+    //     $scope.semillerolinea = TareasResource.execute.query({Accion: 'S',
+    //                      SQL: "SELECT l.lin_codi,l.lin_desc FROM sgi_line_inve_semi AS g " + 
+    //                      " INNER JOIN sgi_line_inve AS l ON g.lis_line_inve_codi=l.lin_codi " +
+    //                      " WHERE g.lis_semi_codi=" + idSemillero + ""}); 
 
-
-    $scope.onChangedSemillero = function(idSemillero) {
-
-        $scope.semillerolinea = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT l.lin_codi,l.lin_desc FROM sgi_line_inve_semi AS g " + 
-                         " INNER JOIN sgi_line_inve AS l ON g.lis_line_inve_codi=l.lin_codi " +
-                         " WHERE g.lis_semi_codi=" + idSemillero + ""}); 
-
-    };
+    // };
 
 
    $scope.on_changedprograma = function(idPrograma){
 
+      var parametros = {
+        Accion:'SELECT2',
+        idPrograma:idPrograma
+      }
+      $('#myModal').show(); 
+      var Programa = TareasResource.prProgramaAcademico(parametros);
+        Programa.then(function(result){
+          $scope.Programa2 = result.data;
+          $('#myModal').hide(); 
+        });
+       
 
-
-       $scope.Programa2 = TareasResource.execute.query({Accion: 'S',
-                         SQL: "SELECT ESCUELA.ESC_NOMB FROM sgi_prog_acad AS PROGRAMA INNER JOIN " +
-                         "sgi_escu AS ESCUELA ON  PROGRAMA.PAC_ESCU_CODI = ESCUELA.ESC_CODI WHERE " +
-                         "PROGRAMA.PAC_CODI =" + idPrograma }); 
 
    };
 
