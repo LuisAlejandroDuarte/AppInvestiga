@@ -16,6 +16,6 @@ define('DB_SERVER','localhost');
 define('DB_NAME','grupogua_investigador');
  // define('DB_USER','root');
  // define('DB_PASS','');
-define('DB_USER','grupogua_jmedicru');
+define('DB_USER','userguane');
 define('DB_PASS','MbCj199803#');
 ?>
