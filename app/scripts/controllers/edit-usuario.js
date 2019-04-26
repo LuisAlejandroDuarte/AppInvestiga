@@ -106,7 +106,8 @@ angular.module('listaTareasApp')
 													FECHA: moment(new Date()).format('YYYY-MM-DD'),
 													IdUser:maximo,
 													PASS: md5(usuario.USE_USUA),
-													USE_TELE:usuario.USE_TELE 
+													USE_TELE:usuario.USE_TELE,
+													USE_EMAI:usuario.USE_EMAI
 			      									};       
 
 									      	TareasResource.prInvestigador(datos).then(function(result) { 

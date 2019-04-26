@@ -125,9 +125,9 @@
 
       $SQL="INSERT INTO  sgi_inve (INV_CODI,INV_IDEN,INV_TIPO_DOCU_CODI, " .
       " INV_NOMB,INV_APEL,INV_FECH_NACI,INV_MAIL,INV_CODI_USUA,INV_PASS,INV_TELE_CELU) " .
-      " VALUES (" . $INV_CODI . "," . $d['USE_IDEN'] . "',1,'" . 
+      " VALUES (" . $INV_CODI . ",'" . $d['USE_IDEN'] . "',1,'" . 
       $d['USE_NOMB'] . "','" . $d['USE_APEL'] . "','" . $d['FECHA'] . "','" .
-      $d['USE_EMAI'] . "','" . $d['IdUser'] . "','" . $d['PASS'] . "','" . $d['USE_TELE'] . "'";
+      $d['USE_EMAI'] . "','" . $d['IdUser'] . "','" . $d['PASS'] . "','" . $d['USE_TELE'] . "')";
 
       $resultArray[0]['Maximo'] = $INV_CODI;              
       $resultado = mysqli_query($conexion,$SQL);
