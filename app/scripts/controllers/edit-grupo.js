@@ -332,14 +332,14 @@ var idInve="";
                                       {                                      
                                        if (value.Nombre==undefined ||value.Nombre=="")                                
                                         {
-                                        $scope.Investigadores  =[];                                
+                                          $scope.Investigadores  =[];                                
                                         }
-                                      }
-                                      else
+                                        else
                                       {
                                         idInve =idInve + value.Id2  + ',';
                                         tieneDatos1 =true;
                                       }
+                                      }                                      
                                                   
                                     });
                                     if (tieneDatos1==true)
