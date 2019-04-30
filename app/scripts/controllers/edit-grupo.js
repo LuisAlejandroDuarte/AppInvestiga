@@ -314,8 +314,8 @@ var idInve="";
                     
 
                         
-                            if (investigador.data[0]!=null)
-                                $scope.datos2[0].selArea = investigador.data[0].selArea;     
+                            if (result.data[0]!=null)
+                                $scope.datos2[0].selArea = result.data[0].selArea;     
                                 parametros = {
                                   Accion:'SELECTGRUPOINVESTIGADOR',
                                   IdInve:user.INV_CODI
