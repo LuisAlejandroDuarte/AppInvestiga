@@ -328,9 +328,12 @@ var idInve="";
                                 Investigadores.then(function(result1){
                                   if (result1.data!=null)
                                     angular.forEach(result1.data, function(value, key){
-                                      if (value.Nombre==undefined ||value.Nombre=="")                                
-                                      {
+                                      if (value!=null)
+                                      {                                      
+                                       if (value.Nombre==undefined ||value.Nombre=="")                                
+                                        {
                                         $scope.Investigadores  =[];                                
+                                        }
                                       }
                                       else
                                       {
