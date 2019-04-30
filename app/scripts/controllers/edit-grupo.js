@@ -326,6 +326,7 @@ var idInve="";
                                 
                                   $scope.Investigadores  =[];   
                                 Investigadores.then(function(result1){
+                                  $('#myModal').hide();  
                                   if (result1.data!=null)
                                     angular.forEach(result1.data, function(value, key){
                                       if (value!=null)
