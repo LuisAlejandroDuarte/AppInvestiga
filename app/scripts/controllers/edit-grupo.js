@@ -229,15 +229,20 @@ var idInve="";
                                                 $scope.Semilleros  =[]; 
                                               Semilleros.then(function(result2){
                                                   angular.forEach(result2.data, function(value, key){
+                                                    if (value!=null)
+                                                    {
                                                     if (value.Nombre==undefined || value.Nombre=="")                                
                                                     {
                                                       $scope.Semilleros  =[];                                
                                                     }
+                                                 
                                                     else
                                                     {
                                                       tieneDatos2 =true;
                                                     }
-                                                                
+                                                  }
+                                                  else
+                                                   $scope.Semilleros  =[];  
                                                   });
                                                   if (tieneDatos2==true)
                                                         $scope.Semilleros = result2.data;    
