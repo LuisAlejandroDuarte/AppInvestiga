@@ -586,6 +586,7 @@ angular.module('listaTareasApp')
                       $scope.proyectoProducto =[];
                       proyectoProducto.then(function(result2){
                     tieneDatos = false;
+                    $scope.proyectoProducto = result2.data;  
                     angular.forEach(result2.data, function(value, key){
           
                       if (value.NombreProducto==undefined)
@@ -598,7 +599,7 @@ angular.module('listaTareasApp')
                     });
                     if (tieneDatos==true)
                     {
-                          $scope.proyectoProducto = result2;     
+                          $scope.proyectoProducto = result2.data;     
                           if (eliminarProducto2==undefined) eliminarProducto2=JSON.stringify(result2);   
                           eliminarProducto2=JSON.stringify(result2);   
                         }
@@ -860,42 +861,55 @@ angular.module('listaTareasApp')
                           $scope.idProyecto = result2[0].valor;
 
                               $scope.Lista =[];
-                          if ($scope.proyectoProducto.length>0)
-                          {                              
-                            angular.forEach( $scope.proyectoProducto,function(item){
-                              if (item.IdProducto==0)
-                              {
-                               $scope.Lista.splice(0,0,{IdProducto:0,IdTipoProducto:item.IdTipoProducto,NombreTipoProducto:item.NombreTipoProducto,NombreProducto:item.NombreProducto,TituloProducto:item.TituloProducto,Fecha:formatoFecha(item.Fecha)});
-                              }
+
+                          var execute = {
+                            Accion:'DELETEPROYECTOS',
+                            idProy:idProyecto,
+                            idInve: idInvestigador
+                          }
+
+                          var datos =TareasResource.prProyectoProducto(execute);
+                            datos.then(function(borrado){
+                              if ($scope.proyectoProducto.length>0)
+                              {                              
+                                angular.forEach( $scope.proyectoProducto,function(item){
+                                  if (item.IdProducto==0)
+                                  {
+                                   $scope.Lista.splice(0,0,{IdProducto:0,IdTipoProducto:item.IdTipoProducto,NombreTipoProducto:item.NombreTipoProducto,NombreProducto:item.NombreProducto,TituloProducto:item.TituloProducto,Fecha:formatoFecha(item.Fecha)});
+                                  }
+    
+                                });
+                               
+                                var datos = {
+                                  Lista:$scope.Lista,
+                                  idProy:idProyecto,
+                                  idInve: idInvestigador
+                                }
+    
+                              TareasResource.enviarProyectoProducto(datos).then(function(result) { 
+    
+                                var resultado = result;
+                                    $('#myModal').hide(); 
+                                    $window.alert("Guardado");
+                                    $scope.pass.strPass="";
+                                    $scope.pass.strRePass="";
+                                    $scope.volverLista();
+                                  
+    
+                              });
+                           }
+                           else
+                           {
+                              $('#myModal').hide(); 
+                                    $window.alert("Guardado");
+                                    $scope.pass.strPass="";
+                                    $scope.pass.strRePass="";
+                                    $scope.volverLista();
+                           }
 
                             });
-                           
-                            var datos = {
-                              Lista:$scope.Lista,
-                              idProy:idProyecto,
-                              idInve: idInvestigador
-                            }
 
-                          TareasResource.enviarProyectoProducto(datos).then(function(result) { 
-
-                            var resultado = result;
-                                $('#myModal').hide(); 
-                                $window.alert("Guardado");
-                                $scope.pass.strPass="";
-                                $scope.pass.strRePass="";
-                                $scope.volverLista();
-                              
-
-                          });
-                       }
-                       else
-                       {
-                          $('#myModal').hide(); 
-                                $window.alert("Guardado");
-                                $scope.pass.strPass="";
-                                $scope.pass.strRePass="";
-                                $scope.volverLista();
-                       }
+                         
                
                   });
 
