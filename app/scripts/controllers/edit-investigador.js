@@ -409,10 +409,10 @@ angular.module('listaTareasApp')
                                                  }
                     
                                                 var  grupo = TareasResource.prGrupo(items); 
-                                                  $scope.grupo =[];
+                                                  $scope.grupoinvestigacion  =[];
                                                 grupo.then(function(result2){
                                                   if (result2.data[0]!=null)
-                                                    $scope.grupo = result2.data;
+                                                    $scope.grupoinvestigacion  = result2.data;
                                                   items= {
                                                     Accion:'SelectNivelFormId_inve',
                                                     IdInve:$route.current.params.idInvestigador 
@@ -471,7 +471,7 @@ angular.module('listaTareasApp')
                     
                                                                                                    $scope.productos =result.data;
                                                                                                    items= {
-                                                                                                    Accion:'SELECT',
+                                                                                                    Accion:'SELECTBYIDINVE',
                                                                                                     IdInve: $route.current.params.idInvestigador                                   
                                                                                                   }
                                                                                                     var grupoinvestigacion =  TareasResource.prGrupo(items); 
@@ -1258,7 +1258,7 @@ $scope.onChangedGrupProducto = function(idGrupo,idLinea){
  
   var parametros = {
     Accion:'SELECTLINEASBYGRUPO3',
-    iGrupo:idGrupo
+    idGrupo:idGrupo
   }
   $('#myModal').show(); 
       $scope.grupolineaproducto = TareasResource.prLineaInvestigacion(parametros);
@@ -1266,6 +1266,7 @@ $scope.onChangedGrupProducto = function(idGrupo,idLinea){
 
      $scope.grupolineaproducto.then(function(result){
           $scope.proy.selLineaInvestigador=idLinea;
+          $scope.grupolineaproducto=result.data;
           $('#myModal').hide(); 
     });
 

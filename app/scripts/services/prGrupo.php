@@ -13,7 +13,7 @@
 
   if ($Accion=="SELECTBYIDINVE")
    {
-    $SQL="SELECT G.gru_codi,G.gru_nomb FROM sgi_grup AS G INNER JOIN sgi_inve_grup AS IG ON IG.IGR_GRUP_CODI=G.gru_codi WHERE " .
+    $SQL="SELECT G.gru_codi As IdGrupo ,G.gru_nomb AS NombreGrupo  FROM sgi_grup AS G INNER JOIN sgi_inve_grup AS IG ON IG.IGR_GRUP_CODI=G.gru_codi WHERE " .
     " IG.IGR_INVE_IDEN=" .  $d['IdInve'];
 
     $resultArray = array(); 
