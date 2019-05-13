@@ -172,7 +172,7 @@ angular.module("listaTareasApp", ['ngRoute','ngAnimate','ngLocale', 'ngResource'
 
   .config(['$routeProvider','$compileProvider',function ($routeProvider,$compileProvider) {
 
-    $compileProvider.debugInfoEnabled(false);
+    //$compileProvider.debugInfoEnabled(false);
 
     $routeProvider
 
