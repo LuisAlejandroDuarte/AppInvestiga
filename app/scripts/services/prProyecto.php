@@ -13,21 +13,21 @@
   if ($Accion=="INSERT")
    {
     $SQL="INSERT INTO sgi_proy  (PRO_NOMB,PRO_FINA) " .
-    " VALUES (" . $d['Nombre'] . "," .  $d['Financiacion'] . ")";
+    " VALUES ('" . $d['Nombre'] . "'," .  $d['Financiacion'] . ")";
 
 
 
     $resultArray = array(); 
   	$resultado = mysqli_query($conexion,$SQL);
-    if (mysqli_num_rows($resultado)==0 )                        
-        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
-    else
-    {
-     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
-           $resultArray[] = $tuple;         
-        }               
-    }
-    $SQL="SELECT MAX(PRO_CODI) from sgi_proy";
+    // if ($resultado==true)                        
+    //     $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    // else
+    // {
+    //  while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+    //        $resultArray[] = $tuple;         
+    //     }               
+    // }
+    $SQL="SELECT MAX(PRO_CODI) As Max from sgi_proy";
     $resultado = mysqli_query($conexion,$SQL);
     $resultArray[]= mysqli_fetch_assoc($resultado);         
    } 

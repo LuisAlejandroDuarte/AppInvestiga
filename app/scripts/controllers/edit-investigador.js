@@ -829,7 +829,7 @@ angular.module('listaTareasApp')
             var  r= TareasResource.prProyecto(parametros);
 
             r.then(function(result2){
-                idProyecto = result2.data[0].valor;
+                idProyecto =parseFloat(result2.data[0].Max);
 
                 // =" +     + ",id_tipoInvestigador=" +  + "," +
                 //   " =" +  + ",  =" +  + 
@@ -862,14 +862,14 @@ angular.module('listaTareasApp')
 
                               $scope.Lista =[];
 
-                          var execute = {
-                            Accion:'DELETEPROYECTOS',
-                            idProy:idProyecto,
-                            idInve: idInvestigador
-                          }
+                          // var execute = {
+                          //   Accion:'DELETEPROYECTOS',
+                          //   idProy:idProyecto,
+                          //   idInve: idInvestigador
+                          // }
 
-                          var datos =TareasResource.prProyectoProducto(execute);
-                            datos.then(function(borrado){
+                          // var datos =TareasResource.prProyectoProducto(execute);
+                          //   datos.then(function(borrado){
                               if ($scope.proyectoProducto.length>0)
                               {                              
                                 angular.forEach( $scope.proyectoProducto,function(item){
@@ -907,7 +907,7 @@ angular.module('listaTareasApp')
                                     $scope.volverLista();
                            }
 
-                            });
+                           
 
                          
                

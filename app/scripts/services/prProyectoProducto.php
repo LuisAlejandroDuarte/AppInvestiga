@@ -12,18 +12,18 @@
 
   if ($Accion='DELETEPROYECTOS')
   {
-    $SQL="DELETE FROM sgi_prod_proy WHERE id_proy=" . $d['idProy'] . " AND id_inve=" . $d['idInve'] ;
+    $SQL="DELETE FROM sgi_prod_proy WHERE id_proy=" . $d['IdProyecto'] . " AND id_inve=" . $d['IdInve'] ;
 
     $resultArray = array(); 
   	$resultado = mysqli_query($conexion,$SQL);
-    if (mysqli_num_rows($resultado)==0 )                        
-        $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
-    else
-    {
-     while ($tuple= mysqli_fetch_assoc($resultado)) {                        
-           $resultArray[] = $tuple;         
-        }               
-    }
+    // if (mysqli_num_rows($resultado)==0 )                        
+    //     $resultArray[]= mysqli_fetch_assoc($resultado);                                                            
+    // else
+    // {
+    //  while ($tuple= mysqli_fetch_assoc($resultado)) {                        
+    //        $resultArray[] = $tuple;         
+    //     }               
+    // }
   }
   
   if ($Accion=="SelectProyectoProducto")
