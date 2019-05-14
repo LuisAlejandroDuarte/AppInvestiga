@@ -967,7 +967,7 @@ angular.module('listaTareasApp')
 
                                   });
 
-                             //     TareasResource.SQLMulti(eliminar).then(function(){
+                                  TareasResource.SQLMulti(eliminar).then(function(){
                                      if ($scope.proyectoProducto.length>0)
                                     {   
                                                                                    
@@ -1010,7 +1010,7 @@ angular.module('listaTareasApp')
                                       $scope.pass.strRePass="";
                                       $scope.volverLista();
                                      }
-                                //  });
+                                  });
 
                                  
                              
