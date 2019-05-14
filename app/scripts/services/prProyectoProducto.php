@@ -10,7 +10,7 @@
      echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
-  if ($Accion='DELETEPROYECTOS')
+  if ($Accion=='DELETEPROYECTOS')
   {
     $SQL="DELETE FROM sgi_prod_proy WHERE id_proy=" . $d['IdProyecto'] . " AND id_inve=" . $d['IdInve'] ;
 
@@ -66,43 +66,43 @@
    
 
 
-   if ($Accion=="DELETEPROYECTO")
-   {
-    $SQL="DELETE FROM sgi_prod_proy where id_proy=" . $d['Codigo'];
+  //  if ($Accion=="DELETEPROYECTO")
+  //  {
+  //   $SQL="DELETE FROM sgi_prod_proy where id_proy=" . $d['Codigo'];
 
-    $resultArray = array(); 
-    $resultado = mysqli_query($conexion,$SQL);
+  //   $resultArray = array(); 
+  //   $resultado = mysqli_query($conexion,$SQL);
     
-  }
+  // }
   
 
 
-  if ($Accion=="DELETEPROYECTO2")
-   {
-    $SQL="DELETE FROM sgi_prod_inve where id_proy="  . $d['Codigo'];
+  // if ($Accion=="DELETEPROYECTO2")
+  //  {
+  //   $SQL="DELETE FROM sgi_prod_inve where id_proy="  . $d['Codigo'];
 
-    $resultArray = array(); 
-    $resultado = mysqli_query($conexion,$SQL);
+  //   $resultArray = array(); 
+  //   $resultado = mysqli_query($conexion,$SQL);
     
-  }
+  // }
 
-  if ($Accion=="DELETEPROYECTO3")
-   {
-    $SQL="DELETE FROM sgi_proy_inve where id_proy=" . $d['Codigo'];
+  // if ($Accion=="DELETEPROYECTO3")
+  //  {
+  //   $SQL="DELETE FROM sgi_proy_inve where id_proy=" . $d['Codigo'];
 
-    $resultArray = array(); 
-    $resultado = mysqli_query($conexion,$SQL);
+  //   $resultArray = array(); 
+  //   $resultado = mysqli_query($conexion,$SQL);
     
-  }
+  // }
 
-  if ($Accion=="DELETEPROYECTO4")
-   {
-    $SQL="DELETE FROM sgi_proy where pro_codi=" . $d['Codigo'];
+  // if ($Accion=="DELETEPROYECTO4")
+  //  {
+  //   $SQL="DELETE FROM sgi_proy where pro_codi=" . $d['Codigo'];
 
-    $resultArray = array(); 
-    $resultado = mysqli_query($conexion,$SQL);
+  //   $resultArray = array(); 
+  //   $resultado = mysqli_query($conexion,$SQL);
     
-  }
+  // }
    
    mysqli_close($conexion);
     echo json_encode($resultArray);                                                        

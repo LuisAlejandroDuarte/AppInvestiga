@@ -589,7 +589,7 @@ angular.module('listaTareasApp')
                     $scope.proyectoProducto = result2.data;  
                     angular.forEach(result2.data, function(value, key){
           
-                      if (value.NombreProducto==undefined)
+                      if (value==null)
                       {              
                         $scope.proyectoProducto =[];              
                       }
@@ -967,7 +967,7 @@ angular.module('listaTareasApp')
 
                                   });
 
-                                  TareasResource.SQLMulti(eliminar).then(function(){
+                             //     TareasResource.SQLMulti(eliminar).then(function(){
                                      if ($scope.proyectoProducto.length>0)
                                     {   
                                                                                    
@@ -1010,7 +1010,7 @@ angular.module('listaTareasApp')
                                       $scope.pass.strRePass="";
                                       $scope.volverLista();
                                      }
-                                  });
+                                //  });
 
                                  
                              
