@@ -688,22 +688,23 @@ angular.module('listaTareasApp')
           $('#myModal').show();    
           var eliminar=[];
            
-        for(var i=0;i<$scope.proyectoProducto.length;i++)
+        
+        while ($scope.proyectoProducto.find(x=>x.Sel==true)!=undefined)
         {
-          if ($scope.proyectoProducto[i].Sel==true)
+          var dato = $scope.proyectoProducto.findIndex(x=>x.Sel==true);
+          if (dato!=undefined)
           {
-
-           
-            
-            $scope.proyectoProducto.splice(i,1);          
+            $scope.proyectoProducto.splice(dato,1); 
           }
         }
 
-      //  eliminarProducto2=JSON.stringify($scope.proyectoProducto);   
+        $('#myModal').hide();    
 
-         TareasResource.SQLMulti(eliminar).then(function(result) { 
-            $('#myModal').hide();    
-         });
+        eliminarProducto2=JSON.stringify($scope.proyectoProducto);   
+
+        //  TareasResource.SQLMulti(eliminar).then(function(result) { 
+         
+        //  });
 
       }
 
@@ -862,14 +863,14 @@ angular.module('listaTareasApp')
 
                               $scope.Lista =[];
 
-                          // var execute = {
-                          //   Accion:'DELETEPROYECTOS',
-                          //   idProy:idProyecto,
-                          //   idInve: idInvestigador
-                          // }
+                          var execute = {
+                            Accion:'DELETEPROYECTOS',
+                            idProy:idProyecto,
+                            idInve: idInvestigador
+                          }
 
-                          // var datos =TareasResource.prProyectoProducto(execute);
-                          //   datos.then(function(borrado){
+                          var datos =TareasResource.prProyectoProducto(execute);
+                            datos.then(function(borrado){
                               if ($scope.proyectoProducto.length>0)
                               {                              
                                 angular.forEach( $scope.proyectoProducto,function(item){
@@ -908,7 +909,7 @@ angular.module('listaTareasApp')
                            }
 
                            
-
+                          });
                          
                
                   });
