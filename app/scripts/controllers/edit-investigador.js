@@ -692,15 +692,19 @@ angular.module('listaTareasApp')
         while ($scope.proyectoProducto.find(x=>x.Sel==true)!=undefined)
         {
           var dato = $scope.proyectoProducto.findIndex(x=>x.Sel==true);
+
+           eliminar.push($scope.proyectoProducto[dato]);
+
           if (dato!=undefined)
           {
+
             $scope.proyectoProducto.splice(dato,1); 
           }
         }
 
         $('#myModal').hide();    
 
-        eliminarProducto2=JSON.stringify($scope.proyectoProducto);   
+        eliminarProducto2=JSON.stringify(eliminar);   
 
         //  TareasResource.SQLMulti(eliminar).then(function(result) { 
          
